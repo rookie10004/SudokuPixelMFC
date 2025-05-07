@@ -23,6 +23,42 @@ CSudokuPixelMFCDlg::CSudokuPixelMFCDlg(CWnd* pParent /*=nullptr*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
+BOOL CSudokuPixelMFCDlg::OnInitSprites()
+{
+
+	if (!frame.Load("./SudokuGridPixel.bmp"))
+	{
+		AfxMessageBox(L"SudokuGridPixel.bmp load error");
+		return FALSE;
+	}
+	frame.SetZ(10);
+	frame.SetPosition(20, 20);
+
+	for (int i = 0; i < 11; i++)
+	{
+		if (!number[i].Load("./SudokuNumbersPixel.bmp", CSize(i * 1,15)))
+		{
+			AfxMessageBox(L"SudokuNumbersPixel.bmp load error");
+			return FALSE;
+		}
+		number[i].SetZ(20);
+		number[i].SetPosition(i + 20, 40);
+	}
+
+
+	buffer.Load("./SudokuGridPixel.bmp");
+
+	list.SetWorkspace(&buffer);
+	list.Insert(&frame);
+	for (int i = 0; i < 9; i++)
+	{
+		list.Insert(&number[i]);
+	}
+
+	return TRUE;
+
+}
+
 void CSudokuPixelMFCDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -31,6 +67,7 @@ void CSudokuPixelMFCDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSudokuPixelMFCDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -45,7 +82,17 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
+
 	// TODO: Add extra initialization here
+
+	if (!OnInitSprites())
+	{
+		OnCancel();
+	}
+
+
+	SetWindowPos(NULL, 0, 0, buffer.DibWidth() + 60, buffer.DibHeight() + 150, SWP_NOZORDER | SWP_NOMOVE);
+	SetTimer(1, 100, NULL);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -56,9 +103,10 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 
 void CSudokuPixelMFCDlg::OnPaint()
 {
+	CPaintDC dc(this); // device context for painting
+
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // device context for painting
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
@@ -75,6 +123,7 @@ void CSudokuPixelMFCDlg::OnPaint()
 	}
 	else
 	{
+		list.RedrawAll(&dc, 0, 0);
 		CDialogEx::OnPaint();
 	}
 }
@@ -86,3 +135,11 @@ HCURSOR CSudokuPixelMFCDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+	CClientDC dc(this);
+	list.Update(&dc, 0, 0);
+	CDialogEx::OnTimer(nIDEvent);
+}

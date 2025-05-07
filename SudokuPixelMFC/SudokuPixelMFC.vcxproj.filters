@@ -33,6 +33,12 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XUnzip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spritelib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SudokuPixelMFC.cpp">
@@ -42,6 +48,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XUnzip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spritelib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,6 +69,15 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SudokuPixelMFC.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumbersPixel.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuGridorg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuGridPixel.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
