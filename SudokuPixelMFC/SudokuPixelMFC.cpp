@@ -6,6 +6,7 @@
 #include "framework.h"
 #include "SudokuPixelMFC.h"
 #include "SudokuPixelMFCDlg.h"
+#include "CSelectSudokuDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -40,6 +41,7 @@ CSudokuPixelMFCApp theApp;
 
 BOOL CSudokuPixelMFCApp::InitInstance()
 {
+
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.
@@ -50,10 +52,14 @@ BOOL CSudokuPixelMFCApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
+	CSelectSudokuDlg selectSudokuDlg;
+	selectSudokuDlg.DoModal();
+
 	CWinApp::InitInstance();
 
 
 	AfxEnableControlContainer();
+
 
 	// Create the shell manager, in case the dialog contains
 	// any shell tree view or shell list view controls.
@@ -70,6 +76,7 @@ BOOL CSudokuPixelMFCApp::InitInstance()
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+
 
 	CSudokuPixelMFCDlg dlg;
 	m_pMainWnd = &dlg;

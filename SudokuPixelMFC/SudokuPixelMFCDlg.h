@@ -3,8 +3,7 @@
 //
 
 #pragma once
-#include "spritelib.h"
-
+#include "CUserInterface.h"
 
 // CSudokuPixelMFCDlg dialog
 class CSudokuPixelMFCDlg : public CDialogEx
@@ -13,7 +12,6 @@ class CSudokuPixelMFCDlg : public CDialogEx
 public:
 	CSudokuPixelMFCDlg(CWnd* pParent = nullptr);	// standard constructor
 
-	BOOL OnInitSprites();
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -27,12 +25,7 @@ public:
 // Implementation
 protected:
 	HICON m_hIcon;
-	CDIB buffer;
-	CSprite bkg;
-	CSprite number[10];
-	CSprite frame;
-	CSprite button[5];
-	CSpriteList list;
+	CUserInterface userInterface;
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();

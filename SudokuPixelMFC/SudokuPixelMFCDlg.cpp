@@ -23,41 +23,6 @@ CSudokuPixelMFCDlg::CSudokuPixelMFCDlg(CWnd* pParent /*=nullptr*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-BOOL CSudokuPixelMFCDlg::OnInitSprites()
-{
-
-	if (!frame.Load("./SudokuGridPixel.bmp"))
-	{
-		AfxMessageBox(L"SudokuGridPixel.bmp load error");
-		return FALSE;
-	}
-	frame.SetZ(10);
-	frame.SetPosition(20, 20);
-
-	for (int i = 0; i < 11; i++)
-	{
-		if (!number[i].Load("./SudokuNumbersPixel.bmp", CSize(i * 1,15)))
-		{
-			AfxMessageBox(L"SudokuNumbersPixel.bmp load error");
-			return FALSE;
-		}
-		number[i].SetZ(20);
-		number[i].SetPosition(i + 20, 40);
-	}
-
-
-	buffer.Load("./SudokuGridPixel.bmp");
-
-	list.SetWorkspace(&buffer);
-	list.Insert(&frame);
-	for (int i = 0; i < 9; i++)
-	{
-		list.Insert(&number[i]);
-	}
-
-	return TRUE;
-
-}
 
 void CSudokuPixelMFCDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -85,13 +50,13 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 
 	// TODO: Add extra initialization here
 
-	if (!OnInitSprites())
+
+	if (!userInterface.OnInitSprites())
 	{
 		OnCancel();
 	}
 
-
-	SetWindowPos(NULL, 0, 0, buffer.DibWidth() + 60, buffer.DibHeight() + 150, SWP_NOZORDER | SWP_NOMOVE);
+	SetWindowPos(NULL, 0, 0, userInterface.GetBuffer().DibWidth(), userInterface.GetBuffer().DibHeight() + 100, SWP_NOZORDER | SWP_NOMOVE);
 	SetTimer(1, 100, NULL);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -123,7 +88,7 @@ void CSudokuPixelMFCDlg::OnPaint()
 	}
 	else
 	{
-		list.RedrawAll(&dc, 0, 0);
+		userInterface.GetSpriteList().RedrawAll(&dc, 0, 0);
 		CDialogEx::OnPaint();
 	}
 }
@@ -140,6 +105,6 @@ void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: Add your message handler code here and/or call default
 	CClientDC dc(this);
-	list.Update(&dc, 0, 0);
+	userInterface.GetSpriteList().Update(&dc, 0, 0);
 	CDialogEx::OnTimer(nIDEvent);
 }

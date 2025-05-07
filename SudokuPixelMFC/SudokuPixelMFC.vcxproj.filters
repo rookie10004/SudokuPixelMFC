@@ -39,6 +39,18 @@
     <ClInclude Include="spritelib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CUserInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUndo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSudoku.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSelectSudokuDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SudokuPixelMFC.cpp">
@@ -54,6 +66,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="spritelib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CUserInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CUndo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSudoku.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSelectSudokuDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,11 +98,61 @@
     <Image Include="SudokuNumbersPixel.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="SudokuGridorg.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="SudokuGridPixel.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="SudokuGridPixelWhite.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sudoku2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sudoku5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sudoku4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sudokuGenerated.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sudoku1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sudoku3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
