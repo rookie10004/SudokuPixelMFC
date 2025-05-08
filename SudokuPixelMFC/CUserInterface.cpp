@@ -73,7 +73,7 @@ BOOL CUserInterface::OnInitSprites()
 	}
 	buttonExit[0].SetZ(0);
 	buttonExit[0].SetPosition(offsetX + gridSize - buttonExitY, buttonRow);
-	spriteList.Insert(&buttonExit[0]);
+	spriteList.Insert(&buttonExit[Status::Default]);
 
 	if (!buttonExit[1].Load("./ButtonExitPressed.bmp", CSize(124, 53), false))
 	{
@@ -123,4 +123,9 @@ int CUserInterface::GetCellIndex(int position, int offset, int tileSize, int blo
 		}
 	}
 	return -1;
+}
+
+void CUserInterface::RemoveSprites()
+{
+	spriteList.Remove(&buttonExit[1]);
 }

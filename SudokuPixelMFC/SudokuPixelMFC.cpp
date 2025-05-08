@@ -54,6 +54,7 @@ BOOL CSudokuPixelMFCApp::InitInstance()
 
 	CSelectSudokuDlg selectSudokuDlg;
 	selectSudokuDlg.DoModal();
+	
 
 	CWinApp::InitInstance();
 

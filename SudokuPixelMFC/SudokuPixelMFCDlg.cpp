@@ -105,7 +105,7 @@ void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	userInterface.GetSpriteList().Remove(&userInterface.GetButtonExit()[1]);
+	userInterface.GetSpriteList().Remove(&userInterface.GetButtonExit()[CUserInterface::Status::Pressed]);
 
 	int column = userInterface.GetCellIndex(point.x, offsetX, tileSize, blockSpacing);
 	int row = userInterface.GetCellIndex(point.y, offsetY, tileSize, blockSpacing);
@@ -125,7 +125,10 @@ void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		userInterface.GetSelectFrame().SetPosition(x, y);
 	}
 
-	if (point.x >= userInterface.GetButtonExit()[0].GetXPos() && point.x <= exitButtonX + userInterface.GetButtonExit()[0].GetXPos() && point.y >= userInterface.GetButtonExit()[0].GetYPos() && point.y <= exitButtonY + userInterface.GetButtonExit()[0].GetYPos())
+	if (point.x >= userInterface.GetButtonExit()[CUserInterface::Status::Default].GetXPos() && 
+		point.x <= exitButtonX + userInterface.GetButtonExit()[CUserInterface::Status::Default].GetXPos() && 
+		point.y >= userInterface.GetButtonExit()[CUserInterface::Status::Default].GetYPos() && 
+		point.y <= exitButtonY + userInterface.GetButtonExit()[CUserInterface::Status::Default].GetYPos())
 	{
 		OnCancel();
 	}
@@ -137,11 +140,14 @@ void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 void CSudokuPixelMFCDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 
-	if (point.x >= userInterface.GetButtonExit()[0].GetXPos() && point.x <= exitButtonX + userInterface.GetButtonExit()[0].GetXPos() && point.y >= userInterface.GetButtonExit()[0].GetYPos() && point.y <= exitButtonY + userInterface.GetButtonExit()[0].GetYPos())
+	if (point.x >= userInterface.GetButtonExit()[CUserInterface::Status::Pressed].GetXPos() && 
+		point.x <= exitButtonX + userInterface.GetButtonExit()[CUserInterface::Status::Default].GetXPos() &&
+		point.y >= userInterface.GetButtonExit()[CUserInterface::Status::Default].GetYPos() &&
+		point.y <= exitButtonY + userInterface.GetButtonExit()[CUserInterface::Status::Default].GetYPos())
 	{
 		userInterface.GetButtonExit()[1].SetZ(3);
 		userInterface.GetButtonExit()[1].SetPosition(offsetX + gridSize - exitButtonX, buttonRow);
-		userInterface.GetSpriteList().Insert(&userInterface.GetButtonExit()[1]);
+		userInterface.GetSpriteList().Insert(&userInterface.GetButtonExit()[CUserInterface::Status::Pressed]);
 	}
 
 	CDialogEx::OnLButtonDown(nFlags, point);

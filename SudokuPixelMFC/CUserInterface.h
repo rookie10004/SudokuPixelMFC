@@ -5,15 +5,27 @@
 
 class CUserInterface
 {
+public:
+	enum Status : int
+	{
+		Default,
+		Pressed
+	};
+
 private:
 	CDIB buffer;
 	CSprite bkg;
 	CSprite number[10];
 	CSprite frame;
-	CSprite buttonExit[2];
 	CSprite selectFrame;
 	CSprite selectDimension[2];
 	CSpriteList spriteList;
+
+	CSprite buttonExit[2];
+	CSprite buttonUndo[2];
+	CSprite buttonReset[2];
+	CSprite buttonSolve[2];
+	CSprite buttonCheck[2];
 
 	int offsetX = 58;
 	int offsetY = 10;
@@ -37,5 +49,7 @@ public:
 	CSprite* GetButtonExit();
 
 	int GetCellIndex(int position, int offset, int tileSize, int blockSpacing);
+
+	void RemoveSprites();
 };
 
