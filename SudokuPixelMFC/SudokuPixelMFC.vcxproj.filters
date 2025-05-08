@@ -98,9 +98,6 @@
     <Image Include="SudokuNumbersPixel.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="SudokuGridPixel.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="SudokuGridPixelWhite.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -132,6 +129,21 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="SudokuNumberPixel8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuFieldSelect.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuGridColumnSelect.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuGridRowSelect.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SudokuGrid423x423.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ButtonExit.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

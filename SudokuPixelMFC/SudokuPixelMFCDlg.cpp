@@ -23,7 +23,6 @@ CSudokuPixelMFCDlg::CSudokuPixelMFCDlg(CWnd* pParent /*=nullptr*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-
 void CSudokuPixelMFCDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -33,10 +32,9 @@ BEGIN_MESSAGE_MAP(CSudokuPixelMFCDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_TIMER()
+	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
-
-
-// CSudokuPixelMFCDlg message handlers
 
 BOOL CSudokuPixelMFCDlg::OnInitDialog()
 {
@@ -46,9 +44,6 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-
-
-	// TODO: Add extra initialization here
 
 
 	if (!userInterface.OnInitSprites())
@@ -103,8 +98,51 @@ HCURSOR CSudokuPixelMFCDlg::OnQueryDragIcon()
 
 void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: Add your message handler code here and/or call default
 	CClientDC dc(this);
 	userInterface.GetSpriteList().Update(&dc, 0, 0);
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	userInterface.GetSpriteList().Remove(&userInterface.GetButtonExit()[1]);
+
+	int column = userInterface.GetCellIndex(point.x, offsetX, tileSize, blockSpacing);
+	int row = userInterface.GetCellIndex(point.y, offsetY, tileSize, blockSpacing);
+
+	if (column >= 0 && row >= 0)
+	{
+		int x = offsetX + column * tileSize + (column / 3) * blockSpacing + blockSpacing;
+		int y = offsetY;
+		userInterface.GetSelectDimension()[0].SetPosition(x, y);
+
+		x = offsetX;
+		y = offsetY + row * tileSize + (row / 3) * blockSpacing + blockSpacing;
+		userInterface.GetSelectDimension()[1].SetPosition(x, y);
+
+		x = column * tileSize + offsetX + (column / 3) * blockSpacing + blockSpacing;
+		y = row * tileSize + offsetY + (row / 3) * blockSpacing + blockSpacing;
+		userInterface.GetSelectFrame().SetPosition(x, y);
+	}
+
+	if (point.x >= userInterface.GetButtonExit()[0].GetXPos() && point.x <= exitButtonX + userInterface.GetButtonExit()[0].GetXPos() && point.y >= userInterface.GetButtonExit()[0].GetYPos() && point.y <= exitButtonY + userInterface.GetButtonExit()[0].GetYPos())
+	{
+		OnCancel();
+	}
+
+	CDialogEx::OnLButtonUp(nFlags, point);
+}
+
+
+void CSudokuPixelMFCDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+
+	if (point.x >= userInterface.GetButtonExit()[0].GetXPos() && point.x <= exitButtonX + userInterface.GetButtonExit()[0].GetXPos() && point.y >= userInterface.GetButtonExit()[0].GetYPos() && point.y <= exitButtonY + userInterface.GetButtonExit()[0].GetYPos())
+	{
+		userInterface.GetButtonExit()[1].SetZ(3);
+		userInterface.GetButtonExit()[1].SetPosition(offsetX + gridSize - exitButtonX, buttonRow);
+		userInterface.GetSpriteList().Insert(&userInterface.GetButtonExit()[1]);
+	}
+
+	CDialogEx::OnLButtonDown(nFlags, point);
 }

@@ -219,8 +219,12 @@
     <None Include="res\SudokuPixelMFC.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="SudokuGridPixel.bmp" />
+    <Image Include="ButtonExit.bmp" />
+    <Image Include="SudokuFieldSelect.bmp" />
+    <Image Include="SudokuGrid423x423.bmp" />
+    <Image Include="SudokuGridColumnSelect.bmp" />
     <Image Include="SudokuGridPixelWhite.bmp" />
+    <Image Include="SudokuGridRowSelect.bmp" />
     <Image Include="SudokuNumberPixel0.bmp" />
     <Image Include="SudokuNumberPixel1.bmp" />
     <Image Include="SudokuNumberPixel2.bmp" />
