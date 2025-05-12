@@ -7,15 +7,8 @@
 class CSudoku : CDialog
 {
 public:
-	enum class Mode : int
-	{
-		NewGame,
-		OldGame
-	};
-
 	enum class Difficulty : int
 	{
-		VeryEasy,
 		Easy,
 		Medium,
 		Hard,
@@ -29,13 +22,12 @@ private:
 	int current[9][9] = {};
 	int original[9][9] = {};
 
-	Mode mode;
 	Difficulty difficulty;
 
 public:
 	CSudoku();
 
-	CSudoku(std::string filePath, Mode mode, Difficulty difficulty);
+	CSudoku(std::string filePath, Difficulty difficulty = Difficulty::Easy);
 
 	int GetCurrentNumber(int row, int column);
 
@@ -51,7 +43,7 @@ public:
 
 	void ResetArrays();
 
-	bool CheckSavegame(std::string filePath);
+	bool CheckSavegame();
 
 	void CopyArray();
 

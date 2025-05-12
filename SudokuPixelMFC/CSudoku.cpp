@@ -5,21 +5,25 @@ CSudoku::CSudoku()
 {
 }
 
-CSudoku::CSudoku(std::string filePath, Mode mode, Difficulty difficulty) : filePath(filePath), mode(mode), difficulty(difficulty)
+CSudoku::CSudoku(std::string filePath, Difficulty difficulty) : filePath(filePath), difficulty(difficulty)
 {
-	if (mode == Mode::NewGame)
-	{
-		LoadNewGame();
-	}
-	else if (mode == Mode::NewGame && filePath == "./sudokuGenerated.txt")
+	if (filePath == "./sudokuGenerated.txt")
 	{
 		GenerateRandomSudoku();
 		RemoveNumbers();
 	}
 	else
 	{
-		LoadOldGame();
+		if (CheckSavegame())
+		{
+			LoadNewGame();
+		}
+		else
+		{
+			LoadOldGame();
+		}
 	}
+
 }
 
 int CSudoku::GetCurrentNumber(int row, int column)
@@ -150,9 +154,9 @@ void CSudoku::ResetArrays()
 	}
 }
 
-bool CSudoku::CheckSavegame(std::string fPath)
+bool CSudoku::CheckSavegame()
 {
-	std::ifstream file(fPath);
+	std::ifstream file(filePath);
 
 	if (!file)
 	{

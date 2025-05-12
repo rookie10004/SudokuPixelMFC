@@ -21,18 +21,6 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
-private:
-	int blockSpacing = 3;
-	int offsetX = 58;
-	int offsetY = 10;
-	int tileSize = 45;
-	int gridSize = 423;
-
-	int exitButtonX = 124;
-	int exitButtonY = 53;
-
-	int buttonRow = 450;
-
 // Implementation
 protected:
 	HICON m_hIcon;
@@ -43,6 +31,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP();
+
 public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

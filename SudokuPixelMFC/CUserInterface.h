@@ -2,6 +2,8 @@
 #include "spritelib.h"
 #include <string>
 #include <vector>
+#include "CVec2.h"
+#include "CSudoku.h"
 
 class CUserInterface
 {
@@ -19,28 +21,57 @@ private:
 	CSprite frame;
 	CSprite selectFrame;
 	CSprite selectDimension[2];
-	CSpriteList spriteList;
+	CSpriteList spriteListSudoku;
+	CSpriteList spriteListSelection;
 
-	CSprite buttonExit[2];
+	CSprite buttonEasy[2];
+	CSprite buttonMedium[2];
+	CSprite buttonHard[2];
+	CSprite buttonExpert[2];
+	CSprite buttonGod[2];
+
 	CSprite buttonUndo[2];
 	CSprite buttonReset[2];
 	CSprite buttonSolve[2];
 	CSprite buttonCheck[2];
+	CSprite buttonBack[2];
+	CSprite buttonExit[2];
 
-	int offsetX = 58;
-	int offsetY = 10;
-	int gridSize = 423;
+	CVec2 offset{ 58, 10 };
+	CVec2 blockSpacing{ 3, 3 };
+	CVec2 gridSize{ 423, 423 };
+	CVec2 tileSize{ 45, 45 };
 
-	int buttonRow = 450;
+	CVec2 buttonSelectRow{ 70, 25 };
+	CVec2 buttonSpace{ 0, 60 };
 
-	int buttonExitY = 123;
+	CVec2 buttonRowFirst{ 0, 450 };
+
+	CVec2 easyButtonSize{ 136, 52 };
+	CVec2 mediumButtonSize{ 204, 52 };
+	CVec2 hardButtonSize{ 140, 52 };
+	CVec2 expertButtonSize{ 192, 52 };
+	CVec2 godButtonSize{ 116, 52 };
+	CVec2 exitButtonSize{ 128, 52 };
 
 public:
-	BOOL OnInitSprites();
+	bool OnInitSpritesSudoku();
+
+	bool OnInitSpritesSelection();
+
+	bool OnLButtonUpSelection(CPoint point);
+
+	void OnLButtonDownSelection(CPoint point);
+
+	bool OnLButtonUpSudoku(CPoint point);
+
+	void OnLButtonDownSudoku(CPoint point);
 
 	CDIB& GetBuffer();
 
-	CSpriteList& GetSpriteList();
+	CSpriteList& GetSpriteListSudoku();
+
+	CSpriteList& GetSpriteListSelection();
 
 	CSprite& GetSelectFrame();
 
