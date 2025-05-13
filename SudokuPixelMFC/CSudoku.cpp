@@ -165,7 +165,7 @@ bool CSudoku::CheckSavegame()
 	}
 
 	int count = 0;
-	while (file.get())
+	while (file.get() != EOF)
 	{
 		count++;
 	}
@@ -178,7 +178,7 @@ bool CSudoku::CheckSavegame()
 	{
 		return false;
 	}
-	
+		
 	file.close();
 }
 

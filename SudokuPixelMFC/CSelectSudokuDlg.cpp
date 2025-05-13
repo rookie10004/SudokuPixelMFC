@@ -108,9 +108,12 @@ void CSelectSudokuDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CSelectSudokuDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	if (!userInterface.OnLButtonUpSelection(point))
+	if (userInterface.OnLButtonUpSelection(point))
 	{
-		OnCancel();
+		ShowWindow(SW_HIDE);
+		CSudokuPixelMFCDlg dlg;
+		dlg.DoModal();
+		ShowWindow(SW_SHOW);
 	}
 
 	CDialogEx::OnLButtonUp(nFlags, point);

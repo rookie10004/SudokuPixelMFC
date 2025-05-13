@@ -1,6 +1,7 @@
 #pragma once
 #include "afxdialogex.h"
 #include "CUserInterface.h"
+#include "SudokuPixelMFCDlg.h"
 
 
 // CSelectSudokuDlg dialog

@@ -43,15 +43,17 @@ private:
 	CVec2 tileSize{ 45, 45 };
 
 	CVec2 buttonSelectRow{ 70, 25 };
-	CVec2 buttonSpace{ 0, 60 };
+	CVec2 buttonSpace{ 0, 60 }; //buttonSize mit eingerechnet
 
 	CVec2 buttonRowFirst{ 0, 450 };
+	CVec2 buttonRowSecond{ 0, 450 + buttonSpace.y };
 
 	CVec2 easyButtonSize{ 136, 52 };
 	CVec2 mediumButtonSize{ 204, 52 };
 	CVec2 hardButtonSize{ 140, 52 };
 	CVec2 expertButtonSize{ 192, 52 };
 	CVec2 godButtonSize{ 116, 52 };
+	CVec2 backButtonSize{ 136, 52 };
 	CVec2 exitButtonSize{ 128, 52 };
 
 public:
