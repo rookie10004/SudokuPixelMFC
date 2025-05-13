@@ -10,7 +10,7 @@ class CSudokuPixelMFCDlg : public CDialogEx
 {
 // Construction
 public:
-	CSudokuPixelMFCDlg(CWnd* pParent = nullptr);	// standard constructor
+	CSudokuPixelMFCDlg(CSudoku& sudoku, CWnd* pParent = nullptr);	// standard constructor
 
 
 // Dialog Data
@@ -25,6 +25,7 @@ public:
 protected:
 	HICON m_hIcon;
 	CUserInterface userInterface;
+	CSudoku& sudoku;
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();

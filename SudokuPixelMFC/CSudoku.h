@@ -27,7 +27,7 @@ private:
 public:
 	CSudoku();
 
-	CSudoku(std::string filePath, Difficulty difficulty = Difficulty::Easy);
+	void SetFilePath(std::string fPath);
 
 	int GetCurrentNumber(int row, int column);
 

@@ -108,10 +108,11 @@ void CSelectSudokuDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CSelectSudokuDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	if (userInterface.OnLButtonUpSelection(point))
+	CSudoku sudoku;
+	if (userInterface.OnLButtonUpSelection(point, sudoku))
 	{
 		ShowWindow(SW_HIDE);
-		CSudokuPixelMFCDlg dlg;
+		CSudokuPixelMFCDlg dlg(sudoku);
 		dlg.DoModal();
 		ShowWindow(SW_SHOW);
 	}

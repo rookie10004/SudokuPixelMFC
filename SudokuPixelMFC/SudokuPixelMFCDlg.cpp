@@ -17,8 +17,8 @@
 
 
 
-CSudokuPixelMFCDlg::CSudokuPixelMFCDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_SUDOKUPIXELMFC_DIALOG, pParent)
+CSudokuPixelMFCDlg::CSudokuPixelMFCDlg(CSudoku& sudoku, CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_SUDOKUPIXELMFC_DIALOG, pParent), sudoku(sudoku)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -46,7 +46,7 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 
-	if (!userInterface.OnInitSpritesSudoku())
+	if (!userInterface.OnInitSpritesSudoku(sudoku))
 	{
 		OnCancel();
 	}
@@ -106,7 +106,7 @@ void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	if (!userInterface.OnLButtonUpSudoku(point))
+	if (!userInterface.OnLButtonUpSudoku(point, sudoku))
 	{
 		OnCancel();
 	}

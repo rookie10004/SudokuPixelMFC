@@ -57,15 +57,15 @@ private:
 	CVec2 exitButtonSize{ 128, 52 };
 
 public:
-	bool OnInitSpritesSudoku();
+	bool OnInitSpritesSudoku(CSudoku& sudoku);
 
 	bool OnInitSpritesSelection();
 
-	bool OnLButtonUpSelection(CPoint point);
+	bool OnLButtonUpSelection(CPoint point, CSudoku& sudoku);
 
 	void OnLButtonDownSelection(CPoint point);
 
-	bool OnLButtonUpSudoku(CPoint point);
+	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku);
 
 	void OnLButtonDownSudoku(CPoint point);
 

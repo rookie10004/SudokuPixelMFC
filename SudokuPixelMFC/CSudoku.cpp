@@ -5,25 +5,9 @@ CSudoku::CSudoku()
 {
 }
 
-CSudoku::CSudoku(std::string filePath, Difficulty difficulty) : filePath(filePath), difficulty(difficulty)
+void CSudoku::SetFilePath(std::string fPath)
 {
-	if (filePath == "./sudokuGenerated.txt")
-	{
-		GenerateRandomSudoku();
-		RemoveNumbers();
-	}
-	else
-	{
-		if (CheckSavegame())
-		{
-			LoadNewGame();
-		}
-		else
-		{
-			LoadOldGame();
-		}
-	}
-
+	filePath = fPath;
 }
 
 int CSudoku::GetCurrentNumber(int row, int column)
@@ -172,14 +156,14 @@ bool CSudoku::CheckSavegame()
 
 	if (count > 81)
 	{
+		file.close();
 		return true;
 	}
 	else
 	{
+		file.close();
 		return false;
 	}
-		
-	file.close();
 }
 
 void CSudoku::CopyArray()

@@ -3,7 +3,7 @@
 #include "SudokuPixelMFCDlg.h"
 
 
-bool CUserInterface::OnInitSpritesSudoku()
+bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 {
 	if (!buffer.Load("./SudokuGridPixelWhite.bmp"))
 	{
@@ -23,12 +23,19 @@ bool CUserInterface::OnInitSpritesSudoku()
 			AfxMessageBox(pathEr.data());
 			return false;
 		}
-		number[i].SetZ(20);
-		number[i].SetPosition((i - 1) * tileSize.x + offset.x + blockSpacing.x + 10, offset.y + blockSpacing.y + 10);
 	}
-	for (int i = 0; i < 10; i++)
+
+	for (int i = 0; i < 9; i++)
 	{
-		spriteListSudoku.Insert(&number[i]);
+		for (int j = 0; j < 9; j++)
+		{
+			if (sudoku.GetCurrentNumber(i, j) != 0)
+			{
+				int x = i * tileSize.x + offset.x + (i / 3) * blockSpacing.x + blockSpacing.x;
+				int y = j * tileSize.y + offset.y + (j / 3) * blockSpacing.y + blockSpacing.y;
+				number[sudoku.GetCurrentNumber(i, j)].Copy()
+			}
+		}
 	}
 
 	if (!selectFrame.Load("./SudokuFieldSelect.bmp"))
@@ -202,7 +209,7 @@ bool CUserInterface::OnInitSpritesSelection()
 	return true;
 }
 
-bool CUserInterface::OnLButtonUpSelection(CPoint point)
+bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 {
 	RemoveSprites();
 
@@ -219,7 +226,15 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point)
 		point.y >= buttonEasy[Status::Default].GetYPos() &&
 		point.y <= easyButtonSize.y + buttonEasy[Status::Default].GetYPos())
 	{
-		static CSudoku sudoku("./sudoku1.txt");
+		sudoku.SetFilePath("./sudoku1.txt");
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
 		return true;
 	}
 
@@ -228,7 +243,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point)
 		point.y >= buttonMedium[Status::Default].GetYPos() &&
 		point.y <= mediumButtonSize.y + buttonMedium[Status::Default].GetYPos())
 	{
-		static CSudoku sudoku("./sudoku2.txt");
+		sudoku.SetFilePath("./sudoku2.txt");
 		return true;
 	}
 
@@ -237,7 +252,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point)
 		point.y >= buttonHard[Status::Default].GetYPos() &&
 		point.y <= hardButtonSize.y + buttonHard[Status::Default].GetYPos())
 	{
-		static CSudoku sudoku("./sudoku3.txt");
+		sudoku.SetFilePath("./sudoku3.txt");
 		return true;
 	}
 
@@ -246,7 +261,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point)
 		point.y >= buttonExpert[Status::Default].GetYPos() &&
 		point.y <= expertButtonSize.y + buttonExpert[Status::Default].GetYPos())
 	{
-		static CSudoku sudoku("./sudoku4.txt");
+		sudoku.SetFilePath("./sudoku4.txt");
 		return true;
 	}
 
@@ -255,7 +270,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point)
 		point.y >= buttonGod[Status::Default].GetYPos() &&
 		point.y <= godButtonSize.y + buttonGod[Status::Default].GetYPos())
 	{
-		static CSudoku sudoku("./sudoku5.txt");
+		sudoku.SetFilePath("./sudoku5.txt");
 		return true;
 	}
 
@@ -325,7 +340,7 @@ void CUserInterface::OnLButtonDownSelection(CPoint point)
 	}
 }
 
-bool CUserInterface::OnLButtonUpSudoku(CPoint point)
+bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 {
 	RemoveSprites();
 
