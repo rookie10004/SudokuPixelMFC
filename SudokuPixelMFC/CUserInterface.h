@@ -105,7 +105,7 @@ public:
 
 	bool OnInitSpritesSelection();
 
-	bool LoadSpriteButton(std::string path, CSprite sprite[], CVec2 vec2, CSpriteList& spriteList, int x, int y, int z);
+	bool LoadSpriteButton(std::string path, CSprite sprite[], CVec2 spriteSize, CSpriteList& spriteList, int x, int y);
 
 	bool OnLButtonUpSelection(CPoint point, CSudoku& sudoku);
 
@@ -114,6 +114,10 @@ public:
 	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku);
 
 	void OnLButtonDownSudoku(CPoint point);
+
+	void ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize);
+
+	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize);
 
 	CDIB& GetBuffer();
 

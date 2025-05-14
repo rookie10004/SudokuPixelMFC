@@ -62,13 +62,13 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 	frame.SetPosition(offset.x, offset.y);
 	spriteListSudoku.Insert(&frame);
 
-	if (!LoadSpriteButton("ButtonBack", buttonBack, backButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + checkButtonSize.x + blockSpacing.x * 2, buttonRowFirst.y, 0) ||
-		!LoadSpriteButton("ButtonUndo", buttonUndo, undoButtonSize, spriteListSudoku, offset.x, buttonRowFirst.y, 0) ||
-		!LoadSpriteButton("ButtonReset", buttonReset, resetButtonSize, spriteListSudoku, offset.x, buttonRowSecond.y, 0) ||
-		!LoadSpriteButton("ButtonCheck", buttonCheck, checkButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + blockSpacing.x, buttonRowFirst.y, 0) ||
-		!LoadSpriteButton("ButtonSolve", buttonSolve, solveButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + blockSpacing.x, buttonRowSecond.y, 0) ||
-		!LoadSpriteButton("ButtonSave", buttonSave, saveButtonSize, spriteListSudoku, offset.x, buttonRowThird.y, 0) ||
-		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + solveButtonSize.x + blockSpacing.x * 2, buttonRowSecond.y, 0))
+	if (!LoadSpriteButton("ButtonBack", buttonBack, backButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + checkButtonSize.x + blockSpacing.x * 2, buttonRowFirst.y) ||
+		!LoadSpriteButton("ButtonUndo", buttonUndo, undoButtonSize, spriteListSudoku, offset.x, buttonRowFirst.y) ||
+		!LoadSpriteButton("ButtonReset", buttonReset, resetButtonSize, spriteListSudoku, offset.x, buttonRowSecond.y) ||
+		!LoadSpriteButton("ButtonCheck", buttonCheck, checkButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + blockSpacing.x, buttonRowFirst.y) ||
+		!LoadSpriteButton("ButtonSolve", buttonSolve, solveButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + blockSpacing.x, buttonRowSecond.y) ||
+		!LoadSpriteButton("ButtonSave", buttonSave, saveButtonSize, spriteListSudoku, offset.x, buttonRowThird.y) ||
+		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + solveButtonSize.x + blockSpacing.x * 2, buttonRowSecond.y))
 	{
 		return false;
 	}
@@ -85,12 +85,12 @@ bool CUserInterface::OnInitSpritesSelection()
 	}
 	spriteListSelection.SetWorkspace(&buffer);
 	
-	if (!LoadSpriteButton("ButtonEasy", buttonEasy, easyButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y, 0) ||
-		!LoadSpriteButton("ButtonMedium", buttonMedium, mediumButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 1, 0) ||
-		!LoadSpriteButton("ButtonHard", buttonHard, hardButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 2, 0) ||
-		!LoadSpriteButton("ButtonExpert", buttonExpert, expertButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 3, 0) ||
-		!LoadSpriteButton("ButtonGod", buttonGod, godButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 4, 0) ||
-		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 5.5, 0))
+	if (!LoadSpriteButton("ButtonEasy", buttonEasy, easyButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y) ||
+		!LoadSpriteButton("ButtonMedium", buttonMedium, mediumButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 1) ||
+		!LoadSpriteButton("ButtonHard", buttonHard, hardButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 2) ||
+		!LoadSpriteButton("ButtonExpert", buttonExpert, expertButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 3) ||
+		!LoadSpriteButton("ButtonGod", buttonGod, godButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 4) ||
+		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 5.5))
 	{
 		return false;
 	}
@@ -98,7 +98,7 @@ bool CUserInterface::OnInitSpritesSelection()
 	return true;
 }
 
-bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 vec2, CSpriteList& spriteList, int x, int y, int z)
+bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 spriteSize, CSpriteList& spriteList, int x, int y)
 {
 	std::string p = "./" + name + ".bmp";
 	std::vector<char> path(p.begin(), p.end()); //Load() hat kein overload für const char* --> konvertiert zu char*
@@ -109,7 +109,7 @@ bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 
 		AfxMessageBox(L"load error!");
 		return false;
 	}
-	sprite[Status::Default].SetZ(z);
+	sprite[Status::Default].SetZ(0);
 	sprite[Status::Default].SetPosition(x, y);
 	spriteList.Insert(&sprite[Status::Default]);
 
@@ -117,7 +117,7 @@ bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 
 	std::vector<char>vPath(p.begin(), p.end());
 	vPath.push_back('\0');
 
-	if (!sprite[Status::Pressed].Load(vPath.data(), CSize(vec2.x, vec2.y), false))
+	if (!sprite[Status::Pressed].Load(vPath.data(), CSize(spriteSize.x, spriteSize.y), false))
 	{
 		AfxMessageBox(L"load error");
 		return false;
@@ -130,18 +130,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 {
 	RemoveSprites();
 
-	if (point.x >= buttonExit[Status::Default].GetXPos() &&
-		point.x <= exitButtonSize.x + buttonExit[Status::Default].GetXPos() &&
-		point.y >= buttonExit[Status::Default].GetYPos() &&
-		point.y <= exitButtonSize.y + buttonExit[Status::Default].GetYPos())
-	{
-		exit(0);
-	}
-
-	if (point.x >= buttonEasy[Status::Default].GetXPos() &&
-		point.x <= easyButtonSize.x + buttonEasy[Status::Default].GetXPos() &&
-		point.y >= buttonEasy[Status::Default].GetYPos() &&
-		point.y <= easyButtonSize.y + buttonEasy[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonEasy, easyButtonSize))
 	{
 		sudoku.SetFilePath("./sudoku1.txt");
 		if (sudoku.CheckSavegame())
@@ -155,10 +144,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		return true;
 	}
 
-	if (point.x >= buttonMedium[Status::Default].GetXPos() &&
-		point.x <= mediumButtonSize.x + buttonMedium[Status::Default].GetXPos() &&
-		point.y >= buttonMedium[Status::Default].GetYPos() &&
-		point.y <= mediumButtonSize.y + buttonMedium[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonMedium, mediumButtonSize))
 	{
 		sudoku.SetFilePath("./sudoku2.txt");
 		if (sudoku.CheckSavegame())
@@ -172,10 +158,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		return true;
 	}
 
-	if (point.x >= buttonHard[Status::Default].GetXPos() &&
-		point.x <= hardButtonSize.x + buttonHard[Status::Default].GetXPos() &&
-		point.y >= buttonHard[Status::Default].GetYPos() &&
-		point.y <= hardButtonSize.y + buttonHard[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonHard, hardButtonSize))
 	{
 		sudoku.SetFilePath("./sudoku3.txt");
 		if (sudoku.CheckSavegame())
@@ -189,10 +172,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		return true;
 	}
 
-	if (point.x >= buttonExpert[Status::Default].GetXPos() &&
-		point.x <= expertButtonSize.x + buttonExpert[Status::Default].GetXPos() &&
-		point.y >= buttonExpert[Status::Default].GetYPos() &&
-		point.y <= expertButtonSize.y + buttonExpert[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonExpert, expertButtonSize))
 	{
 		sudoku.SetFilePath("./sudoku4.txt");
 		if (sudoku.CheckSavegame())
@@ -206,10 +186,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		return true;
 	}
 
-	if (point.x >= buttonGod[Status::Default].GetXPos() &&
-		point.x <= godButtonSize.x + buttonGod[Status::Default].GetXPos() &&
-		point.y >= buttonGod[Status::Default].GetYPos() &&
-		point.y <= godButtonSize.y + buttonGod[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonGod, godButtonSize))
 	{
 		sudoku.SetFilePath("./sudoku5.txt");
 		if (sudoku.CheckSavegame())
@@ -223,70 +200,22 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		return true;
 	}
 
+	if (CheckButtonUp(point, buttonExit, exitButtonSize))
+	{
+		exit(0);
+	}
+
 	return false;
 }
 
 void CUserInterface::OnLButtonDownSelection(CPoint point)
 {
-	if (point.x >= buttonEasy[Status::Default].GetXPos() &&
-		point.x <= easyButtonSize.x + buttonEasy[Status::Default].GetXPos() &&
-		point.y >= buttonEasy[Status::Default].GetYPos() &&
-		point.y <= easyButtonSize.y + buttonEasy[Status::Default].GetYPos())
-	{
-		buttonEasy[Status::Pressed].SetZ(3);
-		buttonEasy[Status::Pressed].SetPosition(buttonEasy[Status::Default].GetXPos(), buttonEasy[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonEasy[Status::Pressed]);
-	}
-
-	if (point.x >= buttonMedium[Status::Default].GetXPos() &&
-		point.x <= mediumButtonSize.x + buttonMedium[Status::Default].GetXPos() &&
-		point.y >= buttonMedium[Status::Default].GetYPos() &&
-		point.y <= mediumButtonSize.y + buttonMedium[Status::Default].GetYPos())
-	{
-		buttonMedium[Status::Pressed].SetZ(3);
-		buttonMedium[Status::Pressed].SetPosition(buttonMedium[Status::Default].GetXPos(), buttonMedium[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonMedium[Status::Pressed]);
-	}
-
-	if (point.x >= buttonHard[Status::Default].GetXPos() &&
-		point.x <= hardButtonSize.x + buttonHard[Status::Default].GetXPos() &&
-		point.y >= buttonHard[Status::Default].GetYPos() &&
-		point.y <= hardButtonSize.y + buttonHard[Status::Default].GetYPos())
-	{
-		buttonHard[Status::Pressed].SetZ(3);
-		buttonHard[Status::Pressed].SetPosition(buttonHard[Status::Default].GetXPos(), buttonHard[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonHard[Status::Pressed]);
-	}
-
-	if (point.x >= buttonExpert[Status::Default].GetXPos() &&
-		point.x <= expertButtonSize.x + buttonExpert[Status::Default].GetXPos() &&
-		point.y >= buttonExpert[Status::Default].GetYPos() &&
-		point.y <= expertButtonSize.y + buttonExpert[Status::Default].GetYPos())
-	{
-		buttonExpert[Status::Pressed].SetZ(3);
-		buttonExpert[Status::Pressed].SetPosition(buttonExpert[Status::Default].GetXPos(), buttonExpert[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonExpert[Status::Pressed]);
-	}
-
-	if (point.x >= buttonGod[Status::Default].GetXPos() &&
-		point.x <= godButtonSize.x + buttonGod[Status::Default].GetXPos() &&
-		point.y >= buttonGod[Status::Default].GetYPos() &&
-		point.y <= godButtonSize.y + buttonGod[Status::Default].GetYPos())
-	{
-		buttonGod[Status::Pressed].SetZ(3);
-		buttonGod[Status::Pressed].SetPosition(buttonGod[Status::Default].GetXPos(), buttonGod[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonGod[Status::Pressed]);
-	}
-
-	if (point.x >= buttonExit[Status::Default].GetXPos() &&
-		point.x <= exitButtonSize.x + buttonExit[Status::Default].GetXPos() &&
-		point.y >= buttonExit[Status::Default].GetYPos() &&
-		point.y <= exitButtonSize.y + buttonExit[Status::Default].GetYPos())
-	{
-		buttonExit[Status::Pressed].SetZ(3);
-		buttonExit[Status::Pressed].SetPosition(buttonExit[Status::Default].GetXPos(), buttonExit[Status::Default].GetYPos());
-		spriteListSelection.Insert(&buttonExit[Status::Pressed]);
-	}
+	ButtonDownAnimation(point, buttonEasy, spriteListSelection, easyButtonSize);
+	ButtonDownAnimation(point, buttonMedium, spriteListSelection, mediumButtonSize);
+	ButtonDownAnimation(point, buttonHard, spriteListSelection, hardButtonSize);
+	ButtonDownAnimation(point, buttonExpert, spriteListSelection, expertButtonSize);
+	ButtonDownAnimation(point, buttonGod, spriteListSelection, godButtonSize);
+	ButtonDownAnimation(point, buttonExit, spriteListSelection, exitButtonSize);
 }
 
 bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
@@ -311,19 +240,20 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 		selectFrame.SetPosition(x, y);
 	}
 
-	if (point.x >= buttonExit[Status::Default].GetXPos() &&
-		point.x <= exitButtonSize.x + buttonExit[Status::Default].GetXPos() &&
-		point.y >= buttonExit[Status::Default].GetYPos() &&
-		point.y <= exitButtonSize.y + buttonExit[Status::Default].GetYPos())
+	if (CheckButtonUp(point, buttonReset, resetButtonSize))
 	{
-		exit(1);
-		return false;
+		sudoku.LoadNewGame();
+		// ???
 	}
 
-	if (point.x >= buttonBack[Status::Default].GetXPos() &&
-		point.x <= backButtonSize.x + buttonBack[Status::Default].GetXPos() &&
-		point.y >= buttonBack[Status::Default].GetYPos() &&
-		point.y <= backButtonSize.y + buttonBack[Status::Default].GetYPos())
+	// logik der anderen Button
+
+	if (CheckButtonUp(point, buttonExit, exitButtonSize))
+	{
+		exit(1);
+	}
+
+	if (CheckButtonUp(point, buttonBack, backButtonSize))
 	{
 		return false;
 	}
@@ -333,25 +263,39 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 
 void CUserInterface::OnLButtonDownSudoku(CPoint point)
 {
-	if (point.x >= buttonExit[Status::Default].GetXPos() &&
-		point.x <= exitButtonSize.x + buttonExit[Status::Default].GetXPos() &&
-		point.y >= buttonExit[Status::Default].GetYPos() &&
-		point.y <= exitButtonSize.y + buttonExit[Status::Default].GetYPos())
+	ButtonDownAnimation(point, buttonSolve, spriteListSudoku, solveButtonSize);
+	ButtonDownAnimation(point, buttonCheck, spriteListSudoku, checkButtonSize);
+	ButtonDownAnimation(point, buttonUndo, spriteListSudoku, undoButtonSize);
+	ButtonDownAnimation(point, buttonReset, spriteListSudoku, resetButtonSize);
+	ButtonDownAnimation(point, buttonSave, spriteListSudoku, saveButtonSize);
+	ButtonDownAnimation(point, buttonExit, spriteListSudoku, exitButtonSize);
+	ButtonDownAnimation(point, buttonBack, spriteListSudoku, backButtonSize);
+}
+
+void CUserInterface::ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize)
+{
+	if (point.x >= sprite[Status::Default].GetXPos() &&
+		point.x <= spriteSize.x + sprite[Status::Default].GetXPos() &&
+		point.y >= sprite[Status::Default].GetYPos() &&
+		point.y <= spriteSize.y + sprite[Status::Default].GetYPos())
 	{
-		buttonExit[Status::Pressed].SetZ(3);
-		buttonExit[Status::Pressed].SetPosition(buttonExit[Status::Default].GetXPos(), buttonExit[Status::Default].GetYPos());
-		spriteListSudoku.Insert(&buttonExit[Status::Pressed]);
+		sprite[Status::Pressed].SetZ(5);
+		sprite[Status::Pressed].SetPosition(sprite[Status::Default].GetXPos(), sprite[Status::Default].GetYPos());
+		spriteList.Insert(&sprite[Status::Pressed]);
+	}
+}
+
+bool CUserInterface::CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize)
+{
+	if (point.x >= sprite[Status::Default].GetXPos() &&
+		point.x <= spriteSize.x + sprite[Status::Default].GetXPos() &&
+		point.y >= sprite	[Status::Default].GetYPos() &&
+		point.y <= spriteSize.y + sprite[Status::Default].GetYPos())
+	{
+		return true;
 	}
 
-	if (point.x >= buttonBack[Status::Default].GetXPos() &&
-		point.x <= backButtonSize.x + buttonBack[Status::Default].GetXPos() &&
-		point.y >= buttonBack[Status::Default].GetYPos() &&
-		point.y <= backButtonSize.y + buttonBack[Status::Default].GetYPos())
-	{
-		buttonBack[Status::Pressed].SetZ(3);
-		buttonBack[Status::Pressed].SetPosition(buttonBack[Status::Default].GetXPos(), buttonBack[Status::Default].GetYPos());
-		spriteListSudoku.Insert(&buttonBack[Status::Pressed]);
-	}
+	return false;
 }
 
 CDIB& CUserInterface::GetBuffer()
