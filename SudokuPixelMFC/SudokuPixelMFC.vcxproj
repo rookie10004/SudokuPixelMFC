@@ -187,7 +187,6 @@
     <ClInclude Include="CSudoku.h" />
     <ClInclude Include="CUndo.h" />
     <ClInclude Include="CUserInterface.h" />
-    <ClInclude Include="CVec2.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />

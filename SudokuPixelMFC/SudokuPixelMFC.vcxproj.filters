@@ -51,9 +51,6 @@
     <ClInclude Include="CSelectSudokuDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CVec2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SudokuPixelMFC.cpp">

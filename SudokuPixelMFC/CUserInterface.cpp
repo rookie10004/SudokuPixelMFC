@@ -7,23 +7,10 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 {
 	if (!buffer.Load("./SudokuGridPixelWhite.bmp"))
 	{
-		AfxMessageBox(L"SudokuGridPixelWhite.bmp load error");
+		AfxMessageBox(L"SudokuBackground.bmp load error");
 		return false;
 	}
 	spriteListSudoku.SetWorkspace(&buffer);
-
-	for (int i = 0; i < 10; i++)
-	{
-		std::string path("./SudokuNumberPixel" + std::to_string(i) + ".bmp");
-		std::vector<char> vPath(path.begin(), path.end());
-		vPath.push_back('\0');
-		if (!number[i].Load(vPath.data(), CSize(32, 32), TRUE))
-		{
-			std::wstring pathEr(L"SudokuNumberPixel" + std::to_wstring(i) + L".bmp load error");
-			AfxMessageBox(pathEr.data());
-			return false;
-		}
-	}
 
 	for (int i = 0; i < 9; i++)
 	{
@@ -31,9 +18,10 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 		{
 			if (sudoku.GetCurrentNumber(i, j) != 0)
 			{
-				int x = i * tileSize.x + offset.x + (i / 3) * blockSpacing.x + blockSpacing.x;
-				int y = j * tileSize.y + offset.y + (j / 3) * blockSpacing.y + blockSpacing.y;
-				number[sudoku.GetCurrentNumber(i, j)].Copy()
+				int x = j * tileSize.x + offset.x + (j / 3) * blockSpacing.x + tileSize.x - numberSize.x - 2;
+				int y = i * tileSize.y + offset.y + (i / 3) * blockSpacing.y + tileSize.y - numberSize.y - 2;
+				CVec2 position{ x, y };
+				SetCell(position, sudoku.GetCurrentNumber(i, j));
 			}
 		}
 	}
@@ -74,33 +62,14 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 	frame.SetPosition(offset.x, offset.y);
 	spriteListSudoku.Insert(&frame);
 
-	if (!buttonExit[Status::Default].Load("./ButtonExit.bmp"))
+	if (!LoadSpriteButton("ButtonBack", buttonBack, backButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + checkButtonSize.x + blockSpacing.x * 2, buttonRowFirst.y, 0) ||
+		!LoadSpriteButton("ButtonUndo", buttonUndo, undoButtonSize, spriteListSudoku, offset.x, buttonRowFirst.y, 0) ||
+		!LoadSpriteButton("ButtonReset", buttonReset, resetButtonSize, spriteListSudoku, offset.x, buttonRowSecond.y, 0) ||
+		!LoadSpriteButton("ButtonCheck", buttonCheck, checkButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + blockSpacing.x, buttonRowFirst.y, 0) ||
+		!LoadSpriteButton("ButtonSolve", buttonSolve, solveButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + blockSpacing.x, buttonRowSecond.y, 0) ||
+		!LoadSpriteButton("ButtonSave", buttonSave, saveButtonSize, spriteListSudoku, offset.x, buttonRowThird.y, 0) ||
+		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + solveButtonSize.x + blockSpacing.x * 2, buttonRowSecond.y, 0))
 	{
-		AfxMessageBox(L"ButtonExit.bmp load error");
-		return false;
-	}
-	buttonExit[Status::Default].SetZ(0);
-	buttonExit[Status::Default].SetPosition(offset.x + gridSize.x - exitButtonSize.x, buttonRowSecond.y);
-	spriteListSudoku.Insert(&buttonExit[Status::Default]);
-
-	if (!buttonExit[Status::Pressed].Load("./ButtonExitPressed.bmp", CSize(128, 52), false))
-	{
-		AfxMessageBox(L"ButtonExitPressed.bmp load error");
-		return false;
-	}
-
-	if (!buttonBack[Status::Default].Load("./ButtonBack.bmp"))
-	{
-		AfxMessageBox(L"ButtonBack.bmp load error");
-		return false;
-	}
-	buttonBack[Status::Default].SetZ(0);
-	buttonBack[Status::Default].SetPosition(offset.x + gridSize.x - backButtonSize.x, buttonRowFirst.y);
-	spriteListSudoku.Insert(&buttonBack[Status::Default]);
-
-	if (!buttonBack[Status::Pressed].Load("./ButtonBackPressed.bmp", CSize(128, 52), false))
-	{
-		AfxMessageBox(L"ButtonBackPressed.bmp load error");
 		return false;
 	}
 
@@ -111,98 +80,46 @@ bool CUserInterface::OnInitSpritesSelection()
 {
 	if (!buffer.Load("./SudokuGridPixelWhite.bmp"))
 	{
-		AfxMessageBox(L"SudokuGridPixelWhite.bmp load error");
+		AfxMessageBox(L"SudokuBackground.bmp load error");
 		return false;
 	}
 	spriteListSelection.SetWorkspace(&buffer);
-
-	if (!buttonExit[Status::Default].Load("./ButtonExit.bmp"))
+	
+	if (!LoadSpriteButton("ButtonEasy", buttonEasy, easyButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y, 0) ||
+		!LoadSpriteButton("ButtonMedium", buttonMedium, mediumButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 1, 0) ||
+		!LoadSpriteButton("ButtonHard", buttonHard, hardButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 2, 0) ||
+		!LoadSpriteButton("ButtonExpert", buttonExpert, expertButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 3, 0) ||
+		!LoadSpriteButton("ButtonGod", buttonGod, godButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 4, 0) ||
+		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSelection, buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 5.5, 0))
 	{
-		AfxMessageBox(L"ButtonExit.bmp load error");
-		return false;
-	}
-	buttonExit[Status::Default].SetZ(0);
-	buttonExit[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 5.5);
-	spriteListSelection.Insert(&buttonExit[Status::Default]);
-
-	if (!buttonExit[Status::Pressed].Load("./ButtonExitPressed.bmp", CSize(128, 52), false))
-	{
-		AfxMessageBox(L"ButtonExitPressed.bmp load error");
 		return false;
 	}
 
-	if (!buttonEasy[Status::Default].Load("./ButtonEasy.bmp"))
+	return true;
+}
+
+bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 vec2, CSpriteList& spriteList, int x, int y, int z)
+{
+	std::string p = "./" + name + ".bmp";
+	std::vector<char> path(p.begin(), p.end()); //Load() hat kein overload für const char* --> konvertiert zu char*
+	path.push_back('\0');
+
+	if (!sprite[Status::Default].Load(path.data()))
 	{
-		AfxMessageBox(L"ButtonEasy.bmp load error");
+		AfxMessageBox(L"load error!");
 		return false;
 	}
-	buttonEasy[Status::Default].SetZ(0);
-	buttonEasy[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y);
-	spriteListSelection.Insert(&buttonEasy[Status::Default]);
+	sprite[Status::Default].SetZ(z);
+	sprite[Status::Default].SetPosition(x, y);
+	spriteList.Insert(&sprite[Status::Default]);
 
-	if (!buttonEasy[Status::Pressed].Load("./ButtonEasyPressed.bmp", CSize(136, 52), false))
-	{
-		AfxMessageBox(L"ButtonEasyPressed.bmp load error");
-		return false;
-	}
+	p = "./" + name + "Pressed.bmp";
+	std::vector<char>vPath(p.begin(), p.end());
+	vPath.push_back('\0');
 
-	if (!buttonMedium[Status::Default].Load("./ButtonMedium.bmp"))
+	if (!sprite[Status::Pressed].Load(vPath.data(), CSize(vec2.x, vec2.y), false))
 	{
-		AfxMessageBox(L"ButtonMedium.bmp load error");
-		return false;
-	}
-	buttonMedium[Status::Default].SetZ(0);
-	buttonMedium[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 1);
-	spriteListSelection.Insert(&buttonMedium[Status::Default]);
-
-	if (!buttonMedium[Status::Pressed].Load("./ButtonMediumPressed.bmp", CSize(204, 52), false))
-	{
-		AfxMessageBox(L"ButtonMediumPressed.bmp load error");
-		return false;
-	}
-
-	if (!buttonHard[Status::Default].Load("./ButtonHard.bmp"))
-	{
-		AfxMessageBox(L"ButtonHard.bmp load error");
-		return false;
-	}
-	buttonHard[Status::Default].SetZ(0);
-	buttonHard[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 2);
-	spriteListSelection.Insert(&buttonHard[Status::Default]);
-
-	if (!buttonHard[Status::Pressed].Load("./ButtonHardPressed.bmp", CSize(140, 52), false))
-	{
-		AfxMessageBox(L"ButtonHardPressed.bmp load error");
-		return false;
-	}
-
-	if (!buttonExpert[Status::Default].Load("./ButtonExpert.bmp"))
-	{
-		AfxMessageBox(L"ButtonExpert.bmp load error");
-		return false;
-	}
-	buttonExpert[Status::Default].SetZ(0);
-	buttonExpert[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 3);
-	spriteListSelection.Insert(&buttonExpert[Status::Default]);
-
-	if (!buttonExpert[Status::Pressed].Load("./ButtonExpertPressed.bmp", CSize(192, 52), false))
-	{
-		AfxMessageBox(L"ButtonExpertPressed.bmp load error");
-		return false;
-	}
-
-	if (!buttonGod[Status::Default].Load("./ButtonGod.bmp"))
-	{
-		AfxMessageBox(L"ButtonGod.bmp load error");
-		return false;
-	}
-	buttonGod[Status::Default].SetZ(0);
-	buttonGod[Status::Default].SetPosition(buttonSelectRow.x, buttonSelectRow.y + buttonSpace.y * 4);
-	spriteListSelection.Insert(&buttonGod[Status::Default]);
-
-	if (!buttonGod[Status::Pressed].Load("./ButtonGodPressed.bmp", CSize(116, 52), false))
-	{
-		AfxMessageBox(L"ButtonGodPressed.bmp load error");
+		AfxMessageBox(L"load error");
 		return false;
 	}
 
@@ -244,6 +161,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y <= mediumButtonSize.y + buttonMedium[Status::Default].GetYPos())
 	{
 		sudoku.SetFilePath("./sudoku2.txt");
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
 		return true;
 	}
 
@@ -253,6 +178,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y <= hardButtonSize.y + buttonHard[Status::Default].GetYPos())
 	{
 		sudoku.SetFilePath("./sudoku3.txt");
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
 		return true;
 	}
 
@@ -262,6 +195,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y <= expertButtonSize.y + buttonExpert[Status::Default].GetYPos())
 	{
 		sudoku.SetFilePath("./sudoku4.txt");
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
 		return true;
 	}
 
@@ -271,6 +212,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y <= godButtonSize.y + buttonGod[Status::Default].GetYPos())
 	{
 		sudoku.SetFilePath("./sudoku5.txt");
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
 		return true;
 	}
 
@@ -466,4 +415,38 @@ void CUserInterface::RemoveSprites()
 	spriteListSudoku.Remove(&buttonUndo[Status::Pressed]);
 	spriteListSudoku.Remove(&buttonSolve[Status::Pressed]);
 	spriteListSudoku.Remove(&buttonCheck[Status::Pressed]);
+}
+
+void CUserInterface::SetCell(CVec2& position, int number)
+{
+	CSprite* numberSprite = LoadSpriteNumber(number);
+	CSprite* currentSprite = GetSprite(position);
+	if (currentSprite != nullptr)
+	{
+		spriteListSudoku.Remove(currentSprite);
+	}
+	numberSprite->SetPosition(position.x, position.y);
+}
+
+CSprite* CUserInterface::LoadSpriteNumber(int number)
+{
+	std::string path("./SudokuNumberPixel" + std::to_string(number) + ".bmp");
+	std::vector<char> vPath(path.begin(), path.end());
+	vPath.push_back('\0');
+
+	CSprite* numberSprite = new CSprite();
+	if (!numberSprite->Load(vPath.data(), CSize(32, 32)))
+	{
+		delete numberSprite;
+	}
+	numberSprite->SetZ(20);
+	numberSprite->SetPosition(-1000, -1000);
+	spriteListSudoku.Insert(numberSprite);
+	return numberSprite;
+}
+
+CSprite* CUserInterface::GetSprite(CVec2& position)
+{
+	// ....
+	return nullptr;
 }
