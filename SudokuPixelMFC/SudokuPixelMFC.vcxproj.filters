@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Sprite Files">
+      <UniqueIdentifier>{dc438d0b-53fb-46d9-bf02-92e8cd8a83f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SudokuPixelMFC.h">
@@ -95,76 +98,76 @@
     <Image Include="res\SudokuPixelMFC.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="ButtonExit.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
     <Image Include="SudokuNumbersPixel.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuGridPixelWhite.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel9.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel0.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel1.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel2.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel3.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel4.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel5.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel6.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel7.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel8.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="SudokuFieldSelect.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuGridColumnSelect.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SudokuGridRowSelect.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="SudokuGrid423x423.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
-    <Image Include="ButtonExit.bmp">
-      <Filter>Resource Files</Filter>
+    <Image Include="SudokuGridColumnSelect.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuGridPixelWhite.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuGridRowSelect.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel0.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel1.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel2.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel3.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel4.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel5.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel6.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel7.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel8.bmp">
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="SudokuNumberPixel9.bmp">
+      <Filter>Sprite Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="sudoku1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
     <Text Include="sudoku2.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sudoku5.txt">
+    <Text Include="sudoku3.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="sudoku4.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="sudoku5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
     <Text Include="sudokuGenerated.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="sudoku1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="sudoku3.txt">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Text>
   </ItemGroup>
 </Project>

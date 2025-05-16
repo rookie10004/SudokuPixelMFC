@@ -4,6 +4,12 @@
 #include <vector>
 #include "CSudoku.h"
 
+/*TODO:	- Ordner mit Sprites sortieren und struktieren
+		- Undo/Reset/Check/Solve/Save Funktion
+		- Code kommentieren
+		- Startbildschirm mit Intro
+		- Sound??*/ 
+
 class CUserInterface
 {
 public:
@@ -16,7 +22,6 @@ public:
 private:
 	struct CVec2
 	{
-	public:
 		int x;
 		int y;
 
@@ -50,6 +55,14 @@ private:
 		}
 	};
 
+	struct SpriteArray
+	{
+		SpriteArray(CSprite* sprite, int number, CVec2 position) : sprite(sprite), number(number), position(position) { }
+
+		CSprite* sprite;
+		int number;
+		CVec2 position;
+	};
 
 	CDIB buffer;
 	CSprite bkg;
