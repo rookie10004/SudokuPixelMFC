@@ -12,13 +12,6 @@
 
 class CUserInterface
 {
-public:
-	enum Status : int
-	{
-		Default,
-		Pressed
-	};
-
 private:
 	struct CVec2
 	{
@@ -53,6 +46,15 @@ private:
 		{
 			return CVec2(x - other.x, y - other.y);
 		}
+	};
+
+	CVec2 selectionSize{ 344, 470 };
+	CVec2 sudokuSize{  }; // fehlt noch
+
+	enum Status : int
+	{
+		Default,
+		Pressed
 	};
 
 	struct SpriteArray
@@ -98,7 +100,6 @@ private:
 
 	CVec2 buttonRowFirst{ 0, 445 };
 	CVec2 buttonRowSecond{ 0, 445 + buttonSpace.y };
-	CVec2 buttonRowThird{ 0, 445 + buttonSpace.y * 2 };
 
 	CVec2 easyButtonSize{ 136, 52 };
 	CVec2 mediumButtonSize{ 204, 52 };
