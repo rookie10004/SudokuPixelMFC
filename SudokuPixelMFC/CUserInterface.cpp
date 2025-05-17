@@ -18,8 +18,8 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 		{
 			if (sudoku.GetCurrentNumber(i, j) != 0)
 			{
-				int x = j * tileSize.x + offset.x + (j / 3) * blockSpacing.x + tileSize.x - numberSize.x - 2;
-				int y = i * tileSize.y + offset.y + (i / 3) * blockSpacing.y + tileSize.y - numberSize.y - 2;
+				int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
+				int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
 				CVec2 position{ x, y };
 				SetCell(position, sudoku.GetCurrentNumber(i, j));
 			}
@@ -62,13 +62,13 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 	frame.SetPosition(offset.x, offset.y);
 	spriteListSudoku.Insert(&frame);
 
-	if (/*!LoadSpriteButton("ButtonBack", buttonBack, backButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + checkButtonSize.x + blockSpacing.x * 2, buttonRowFirst.y) ||*/
-		!LoadSpriteButton("ButtonUndo", buttonUndo, undoButtonSize, spriteListSudoku, offset.x, buttonRowFirst.y) ||
-		!LoadSpriteButton("ButtonReset", buttonReset, resetButtonSize, spriteListSudoku, offset.x, buttonRowSecond.y) ||
-		!LoadSpriteButton("ButtonCheck", buttonCheck, checkButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + blockSpacing.x, buttonRowFirst.y) ||
-		!LoadSpriteButton("ButtonSolve", buttonSolve, solveButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + blockSpacing.x, buttonRowSecond.y) ||
-		!LoadSpriteButton("ButtonSave", buttonSave, saveButtonSize, spriteListSudoku, offset.x + undoButtonSize.x + checkButtonSize.x + blockSpacing.x * 2, buttonRowFirst.y) /* ||
-		!LoadSpriteButton("ButtonExit", buttonExit, exitButtonSize, spriteListSudoku, offset.x + resetButtonSize.x + solveButtonSize.x + blockSpacing.x * 2, buttonRowSecond.y)*/)
+	if (!LoadSpriteButton("ButtonBackIcon", buttonBack, iconButtonSize, spriteListSudoku, buttonRowSecond.x + resetButtonSize.x + solveButtonSize.x + blockSpace.x * 2, buttonRowSecond.y) ||
+		!LoadSpriteButton("ButtonUndo", buttonUndo, undoButtonSize, spriteListSudoku, buttonRowFirst.x, buttonRowFirst.y) ||
+		!LoadSpriteButton("ButtonReset", buttonReset, resetButtonSize, spriteListSudoku, buttonRowSecond.x, buttonRowSecond.y) ||
+		!LoadSpriteButton("ButtonCheck", buttonCheck, checkButtonSize, spriteListSudoku, buttonRowFirst.x + undoButtonSize.x + blockSpace.x, buttonRowFirst.y) ||
+		!LoadSpriteButton("ButtonSolve", buttonSolve, solveButtonSize, spriteListSudoku, buttonRowSecond.x + resetButtonSize.x + blockSpace.x, buttonRowSecond.y) ||
+		!LoadSpriteButton("ButtonSave", buttonSave, saveButtonSize, spriteListSudoku, buttonRowFirst.x + undoButtonSize.x + checkButtonSize.x + blockSpace.x * 2, buttonRowFirst.y)  ||
+		!LoadSpriteButton("ButtonExitIcon", buttonExit, iconButtonSize, spriteListSudoku, buttonRowSecond.x + resetButtonSize.x + solveButtonSize.x + iconButtonSize.x + blockSpace.x * 3, buttonRowSecond.y))
 	{
 		return false;
 	}
@@ -94,6 +94,15 @@ bool CUserInterface::OnInitSpritesSelection()
 	{
 		return false;
 	}
+
+	if (!buttonGithub.Load("./Sprites/githubIcon.bmp"))
+	{
+		AfxMessageBox(L"githubIcon.bmp load error");
+		return false;
+	}
+	buttonGithub.SetZ(0);
+	buttonGithub.SetPosition(280, 380);
+	spriteListSelection.Insert(&buttonGithub);
 
 	return true;
 }
@@ -132,7 +141,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonEasy, easyButtonSize))
 	{
-		sudoku.SetFilePath("./sudoku1.txt");
+		sudoku.SetFilePath("./Sudoku Loadouts/sudoku1.txt");
 		if (sudoku.CheckSavegame())
 		{
 			sudoku.LoadOldGame();
@@ -146,7 +155,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonMedium, mediumButtonSize))
 	{
-		sudoku.SetFilePath("./sudoku2.txt");
+		sudoku.SetFilePath("./Sudoku Loadouts/sudoku2.txt");
 		if (sudoku.CheckSavegame())
 		{
 			sudoku.LoadOldGame();
@@ -160,7 +169,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonHard, hardButtonSize))
 	{
-		sudoku.SetFilePath("./sudoku3.txt");
+		sudoku.SetFilePath("./Sudoku Loadouts/sudoku3.txt");
 		if (sudoku.CheckSavegame())
 		{
 			sudoku.LoadOldGame();
@@ -174,7 +183,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonExpert, expertButtonSize))
 	{
-		sudoku.SetFilePath("./sudoku4.txt");
+		sudoku.SetFilePath("./Sudoku Loadouts/sudoku4.txt");
 		if (sudoku.CheckSavegame())
 		{
 			sudoku.LoadOldGame();
@@ -188,7 +197,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonGod, godButtonSize))
 	{
-		sudoku.SetFilePath("./sudoku5.txt");
+		sudoku.SetFilePath("./Sudoku Loadouts/sudoku5.txt");
 		if (sudoku.CheckSavegame())
 		{
 			sudoku.LoadOldGame();
@@ -203,6 +212,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 	if (CheckButtonUp(point, buttonExit, exitButtonSize))
 	{
 		exit(0);
+	}
+
+	if (point.x >= buttonGithub.GetXPos() &&
+		point.x <= githubIconSize.x + buttonGithub.GetXPos() &&
+		point.y >= buttonGithub.GetYPos() &&
+		point.y <= githubIconSize.y + buttonGithub.GetYPos())
+	{
+		ShellExecute(0, 0, L"https://github.com/rookie10004", 0, 0, SW_SHOW);
 	}
 
 	return false;
@@ -222,21 +239,21 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 {
 	RemoveSprites();
 
-	int column = GetCellIndex(point.x, offset.x, tileSize.x, blockSpacing.x);
-	int row = GetCellIndex(point.y, offset.y, tileSize.y, blockSpacing.y);
+	int column = GetCellIndex(point.x, offset.x, tileSize.x, blockSpace.x);
+	int row = GetCellIndex(point.y, offset.y, tileSize.y, blockSpace.y);
 
 	if (column >= 0 && row >= 0)
 	{
-		int x = offset.x + column * tileSize.x + (column / 3) * blockSpacing.x + blockSpacing.x;
+		int x = offset.x + column * tileSize.x + (column / 3) * blockSpace.x + blockSpace.x;
 		int y = offset.y;
 		selectDimension[0].SetPosition(x, y);
 
 		x = offset.x;
-		y = offset.y + row * tileSize.y + (row / 3) * blockSpacing.y + blockSpacing.y;
+		y = offset.y + row * tileSize.y + (row / 3) * blockSpace.y + blockSpace.y;
 		selectDimension[1].SetPosition(x, y);
 
-		x = column * tileSize.x + offset.x + (column / 3) * blockSpacing.x + blockSpacing.x;
-		y = row * tileSize.y + offset.y + (row / 3) * blockSpacing.y + blockSpacing.y;
+		x = column * tileSize.x + offset.x + (column / 3) * blockSpace.x + blockSpace.x;
+		y = row * tileSize.y + offset.y + (row / 3) * blockSpace.y + blockSpace.y;
 		selectFrame.SetPosition(x, y);
 	}
 
@@ -248,12 +265,12 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 
 	// logik der anderen Button
 
-	if (CheckButtonUp(point, buttonExit, exitButtonSize))
+	if (CheckButtonUp(point, buttonExit, iconButtonSize))
 	{
 		exit(1);
 	}
 
-	if (CheckButtonUp(point, buttonBack, backButtonSize))
+	if (CheckButtonUp(point, buttonBack, iconButtonSize))
 	{
 		return false;
 	}
@@ -268,8 +285,8 @@ void CUserInterface::OnLButtonDownSudoku(CPoint point)
 	ButtonDownAnimation(point, buttonUndo, spriteListSudoku, undoButtonSize);
 	ButtonDownAnimation(point, buttonReset, spriteListSudoku, resetButtonSize);
 	ButtonDownAnimation(point, buttonSave, spriteListSudoku, saveButtonSize);
-	ButtonDownAnimation(point, buttonExit, spriteListSudoku, exitButtonSize);
-	ButtonDownAnimation(point, buttonBack, spriteListSudoku, backButtonSize);
+	ButtonDownAnimation(point, buttonExit, spriteListSudoku, iconButtonSize);
+	ButtonDownAnimation(point, buttonBack, spriteListSudoku, iconButtonSize);
 }
 
 void CUserInterface::ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize)
@@ -328,12 +345,12 @@ CSprite* CUserInterface::GetButtonExit()
 	return buttonExit;
 }
 
-int CUserInterface::GetCellIndex(int position, int offset, int tileSize, int blockSpacing)
+int CUserInterface::GetCellIndex(int position, int offset, int tileSize, int blockSpace)
 {
 	int adjusted = position - offset;
 	for (int i = 0; i < 9; i++)
 	{
-		int blockOffset = (i / 3) * blockSpacing;
+		int blockOffset = (i / 3) * blockSpace;
 		int start = i * tileSize + blockOffset;
 		int end = start + tileSize;
 		if (adjusted >= start && adjusted < end)

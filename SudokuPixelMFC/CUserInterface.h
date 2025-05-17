@@ -4,9 +4,10 @@
 #include <vector>
 #include "CSudoku.h"
 
-/*TODO:	- Ordner mit Sprites sortieren und struktieren
+/*TODO:	
 		- Undo/Reset/Check/Solve/Save Funktion
 		- Code kommentieren
+		- Zahlen die man nicht editeren kann --> anders farbig
 		- Startbildschirm mit Intro
 		- Sound??*/ 
 
@@ -88,31 +89,33 @@ private:
 	CSprite buttonSave[2];
 	CSprite buttonBack[2];
 	CSprite buttonExit[2];
+	CSprite buttonGithub;
 
 	CVec2 offset{ 58, 10 };
-	CVec2 blockSpacing{ 3, 3 };
 	CVec2 gridSize{ 423, 423 };
 	CVec2 tileSize{ 45, 45 };
 	CVec2 numberSize{ 32, 32 };
 
-	CVec2 buttonSelectRow{ 70, 25 };
-	CVec2 buttonSpace{ 0, 60 }; //buttonSize mit eingerechnet
+	CVec2 blockSpace{ 3, 3 };
+	CVec2 buttonSpace{ 0, 52 + 8 }; //buttonSize(52) mit eingerechnet
 
-	CVec2 buttonRowFirst{ 0, 445 };
-	CVec2 buttonRowSecond{ 0, 445 + buttonSpace.y };
+	CVec2 buttonSelectRow{ 70, 25 };
+	CVec2 buttonRowFirst{ 52, 445 };
+	CVec2 buttonRowSecond{ 48, buttonRowFirst.y + buttonSpace.y };
 
 	CVec2 easyButtonSize{ 136, 52 };
 	CVec2 mediumButtonSize{ 204, 52 };
 	CVec2 hardButtonSize{ 140, 52 };
 	CVec2 expertButtonSize{ 192, 52 };
 	CVec2 godButtonSize{ 116, 52 };
-	CVec2 backButtonSize{ 136, 52 };
 	CVec2 exitButtonSize{ 128, 52 };
 	CVec2 undoButtonSize{ 140, 52 };
 	CVec2 saveButtonSize{ 136, 52 };
 	CVec2 solveButtonSize{ 160, 52 };
 	CVec2 checkButtonSize{ 164, 52 };
 	CVec2 resetButtonSize{ 164, 52 };
+	CVec2 iconButtonSize{ 60, 52 };
+	CVec2 githubIconSize{ 44, 44 };
 
 public:
 	bool OnInitSpritesSudoku(CSudoku& sudoku);
@@ -145,7 +148,7 @@ public:
 
 	CSprite* GetButtonExit();
 
-	int GetCellIndex(int position, int offset, int tileSize, int blockSpacing);
+	int GetCellIndex(int position, int offset, int tileSize, int blockSpace);
 
 	void RemoveSprites();
 
