@@ -805,6 +805,27 @@ void CSprite::SetPosition(int x, int y)
         SetDirtyRect(&r);
 }
 
+void CSprite::SetPosition(CVec2 position)
+{
+    CRect r, dr;
+
+    // Save the current position.
+    GetRect(&r);
+    GetDirtyRect(&dr);
+    if (r != dr)
+        SetDirtyRect(&r);
+
+    // Move to new position.
+    m_x = position.x; m_y = position.y;
+
+    // Notify that we have moved from our old position to
+    // our new position.
+    GetRect(&r);
+    GetDirtyRect(&dr);
+    if (r != dr)
+        SetDirtyRect(&r);
+}
+
 // Gets the current  x,y-psoition of the sprite
 CPoint CSprite::GetPos() {
     return CPoint(m_x,m_y);

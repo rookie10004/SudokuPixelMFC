@@ -20,6 +20,11 @@ int CSudoku::GetOriginalNumber(int row, int column)
 	return original[row][column];
 }
 
+int CSudoku::GetOriginalNumber(CVec2& index)
+{
+	return original[index.y][index.x];
+}
+
 void CSudoku::SetCurrentNumber(int number, int row, int column)
 {
 	current[row][column] = number;

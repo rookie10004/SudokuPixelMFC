@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <afxwin.h>
+#include "CVec2.h"
 
 class CSudoku : CDialog
 {
@@ -32,6 +33,8 @@ public:
 	int GetCurrentNumber(int row, int column);
 
 	int GetOriginalNumber(int row, int column);
+
+	int GetOriginalNumber(CVec2& index);
 
 	void SetCurrentNumber(int number, int  row, int column);
 

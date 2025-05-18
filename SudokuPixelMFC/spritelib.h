@@ -17,6 +17,7 @@
 #pragma warning (disable: 28183)
 
 #include <mmsystem.h>
+#include "CVec2.h"
 
 class CDIB : public CObject {
 public:
@@ -110,6 +111,7 @@ public:
     void    SetZ(int z);    // Z-Position des Sprites in der Szene (0..Hintergrund) setzen
     int     GetZ();         // Z-Position des Sprites in der Szene ermitteln
     void    SetPosition(int x, int y);  // X,Y-Position des Sprites in der Szene setzen (0,0)=linke obere Ecke
+    void    SetPosition(CVec2 position);
     CPoint  GetPos();       // liefert die X,Y Position des Sprites in der Szene
     void    GetRect(CRect* pRect); // liefert die Position und die Ausdehnung des Sprites in der Szene
     void    SetAlpha(float a); // setzt den Alphakanal 0.0 ... 1.0

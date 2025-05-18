@@ -3,52 +3,19 @@
 #include <string>
 #include <vector>
 #include "CSudoku.h"
+#include "CVec2.h"
+#include <cstdlib>
 
 /*TODO:	
 		- Undo/Reset/Check/Solve/Save Funktion
 		- Code kommentieren
-		- Zahlen die man nicht editeren kann --> anders farbig
 		- Startbildschirm mit Intro
+		- Exceptions
 		- Sound??*/ 
 
 class CUserInterface
 {
 private:
-	struct CVec2
-	{
-		int x;
-		int y;
-
-		CVec2() : x(0), y(0) {}
-
-		CVec2(int xValue, int yValue) : x(xValue), y(yValue) {}
-
-		bool operator==(const CVec2& other) const
-		{
-			return (x == other.x && y == other.y);
-		}
-
-		bool operator!=(const CVec2& other) const
-		{
-			return !(*this == other);
-		}
-
-		CVec2& operator=(const CVec2& other)
-		{
-			return CVec2(x = other.x, y = other.y);
-		}
-
-		CVec2& operator+(const CVec2& other)
-		{
-			return CVec2(x + other.x, y + other.y);
-		}
-
-		CVec2& operator-(const CVec2& other)
-		{
-			return CVec2(x - other.x, y - other.y);
-		}
-	};
-
 	CVec2 selectionSize{ 344, 470 };
 	CVec2 sudokuSize{  }; // fehlt noch
 
@@ -141,7 +108,7 @@ public:
 
 	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize);
 
-	void OnChar(UINT nChar);
+	void OnChar(UINT nChar, CSudoku& sudoku);
 
 	CDIB& GetBuffer();
 
@@ -155,7 +122,9 @@ public:
 
 	CSprite* GetButtonExit();
 
-	int GetCellIndex(int position, int offset, int tileSize, int blockSpace);
+	CVec2 GetCellIndex(CVec2& position);
+
+	void openURL(const std::string& url);
 
 	void RemoveSprites();
 

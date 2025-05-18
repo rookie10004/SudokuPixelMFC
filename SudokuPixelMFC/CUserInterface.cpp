@@ -25,7 +25,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 				int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
 				int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
 				CVec2 position{ x, y };
-				LoadSpriteNumber(position, sudoku.GetCurrentNumber(i, j), 0.65f);
+				LoadSpriteNumber(position, sudoku.GetCurrentNumber(i, j));
 			}
 		}
 	}
@@ -223,7 +223,7 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y >= buttonGithub.GetYPos() &&
 		point.y <= githubIconSize.y + buttonGithub.GetYPos())
 	{
-		ShellExecute(0, 0, L"https://github.com/rookie10004", 0, 0, SW_SHOW);
+		openURL("https://github.com/rookie10004/SudokuPixelMFC");
 	}
 
 	return false;
@@ -243,22 +243,19 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 {
 	RemoveSprites();
 
-	int column = GetCellIndex(point.x, offset.x, tileSize.x, blockSpace.x);
-	int row = GetCellIndex(point.y, offset.y, tileSize.y, blockSpace.y);
+	CVec2 currentCell = GetCellIndex(CVec2(point.x, point.y));
 
-	if (column >= 0 && row >= 0)
+	if (currentCell != CVec2(-1, -1))
 	{
-		int x = offset.x + column * tileSize.x + (column / 3) * blockSpace.x + blockSpace.x;
-		int y = offset.y;
-		selectDimension[0].SetPosition(x, y);
+		CVec2 position(offset.x + currentCell.x * tileSize.x + (currentCell.x / 3) * blockSpace.x + blockSpace.x, offset.y);
+		selectDimension[0].SetPosition(position);
 
-		x = offset.x;
-		y = offset.y + row * tileSize.y + (row / 3) * blockSpace.y + blockSpace.y;
-		selectDimension[1].SetPosition(x, y);
+		position.x = offset.x;
+		position.y = offset.y + currentCell.y * tileSize.y + (currentCell.y / 3) * blockSpace.y + blockSpace.y;
+		selectDimension[1].SetPosition(position);
 
-		x = column * tileSize.x + offset.x + (column / 3) * blockSpace.x + blockSpace.x;
-		y = row * tileSize.y + offset.y + (row / 3) * blockSpace.y + blockSpace.y;
-		selectFrame.SetPosition(x, y);
+		position = currentCell * tileSize + offset + (currentCell / 3) * blockSpace + blockSpace;
+		selectFrame.SetPosition(position);
 	}
 
 	if (CheckButtonUp(point, buttonReset, resetButtonSize))
@@ -319,11 +316,14 @@ bool CUserInterface::CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteS
 	return false;
 }
 
-void CUserInterface::OnChar(UINT nChar)
+void CUserInterface::OnChar(UINT nChar, CSudoku& sudoku)
 {
-	if (nChar == '1')
+	if (sudoku.GetOriginalNumber(GetCellIndex(CVec2(selectFrame.GetXPos(), selectFrame.GetYPos()))) == 0)
 	{
-		
+		if (nChar >= 49 && nChar <= 58)
+		{
+			SetCell(CVec2(selectFrame.GetXPos() + 8, selectFrame.GetYPos() + 8), nChar - '0');
+		}
 	}
 }
 
@@ -357,21 +357,57 @@ CSprite* CUserInterface::GetButtonExit()
 	return buttonExit;
 }
 
-int CUserInterface::GetCellIndex(int position, int offset, int tileSize, int blockSpace)
+CVec2 CUserInterface::GetCellIndex(CVec2& position)
 {
-	int adjusted = position - offset;
+	CVec2 adjusted = position - offset;
+
 	for (int i = 0; i < 9; i++)
 	{
-		int blockOffset = (i / 3) * blockSpace;
-		int start = i * tileSize + blockOffset;
-		int end = start + tileSize;
-		if (adjusted >= start && adjusted < end)
+		int blockOffset = (i / 3) * blockSpace.x;
+		int start = i * tileSize.x + blockOffset;
+		int end = start + tileSize.x;
+
+		if (adjusted.x >= start && adjusted.x < end)
 		{
-			return i;
+			for (int j = 0; j < 9; j++)
+			{
+				int blockOffsetY = (j / 3) * blockSpace.y;
+				int startY = j * tileSize.y + blockOffsetY;
+				int endY = startY + tileSize.y;
+
+				if (adjusted.y >= startY && adjusted.y < endY)
+				{
+					return CVec2(i, j);
+				}
+			}
 		}
 	}
-	return -1;
+
+	return CVec2(-1, -1);
 }
+
+void CUserInterface::openURL(const std::string& url)
+{
+#if defined(_WIN32) || defined(_WIN64)
+
+	std::wstring wURL(url.begin(), url.end());
+	ShellExecute(0, 0, wURL.c_str(), 0, 0, SW_SHOW);
+
+#elif defined(__APPLE__)
+
+	std::string command = "open " + url;
+	system(command.c_str());
+
+#elif defined(__linux__)
+
+	std::string command = "xdg-open " + url;
+	system(command.c_str());
+
+#else
+	AfxMessageBox(L"Plattform wird nicht unterstützt");
+#endif
+}
+
 
 void CUserInterface::RemoveSprites()
 {
@@ -393,13 +429,13 @@ void CUserInterface::RemoveSprites()
 
 void CUserInterface::SetCell(CVec2& position, int number)
 {
-	CSprite* numberSprite = LoadSpriteNumber(position, number);
-	spriteArray[GetCellIndex(position.x, offset.x, tileSize.x, blockSpace.x)][GetCellIndex(position.y, offset.y, tileSize.y, blockSpace.y)] = SpriteArray(numberSprite, number, position);
+	CSprite* numberSprite = LoadSpriteNumber(position, number, 0.65f);
 	CSprite* currentSprite = GetSprite(position);
 	if (currentSprite != nullptr)
 	{
 		spriteListSudoku.Remove(currentSprite);
 	}
+	spriteArray[GetCellIndex(position).x][GetCellIndex(position).y] = SpriteArray(numberSprite, number, position);
 }
 
 CSprite* CUserInterface::LoadSpriteNumber(CVec2& position, int number, float alpha)
@@ -423,5 +459,5 @@ CSprite* CUserInterface::LoadSpriteNumber(CVec2& position, int number, float alp
 
 CSprite* CUserInterface::GetSprite(CVec2& position)
 {
-	return spriteArray[GetCellIndex(position.x, offset.x, tileSize.x, blockSpace.x)][GetCellIndex(position.y, offset.y, tileSize.y, blockSpace.y)].sprite;
+	return spriteArray[GetCellIndex(position).x][GetCellIndex(position).y].sprite;
 }

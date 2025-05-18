@@ -63,7 +63,7 @@ BOOL CSudokuPixelMFCDlg::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_CHAR)
 	{
 		TCHAR ch = (TCHAR)pMsg->wParam;
-		userInterface.OnChar(ch);
+		userInterface.OnChar(ch, sudoku);
 		return true;
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
