@@ -54,6 +54,9 @@
     <ClInclude Include="CSelectSudokuDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CSolve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SudokuPixelMFC.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CSelectSudokuDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSolve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

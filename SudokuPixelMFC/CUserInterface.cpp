@@ -3,6 +3,10 @@
 #include "SudokuPixelMFCDlg.h"
 
 
+CUserInterface::CUserInterface()
+{
+}
+
 bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 {
 	if (!buffer.Load("./Sprites/SudokuGridPixelWhite.bmp"))
@@ -21,7 +25,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 				int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
 				int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
 				CVec2 position{ x, y };
-				SetCell(position, sudoku.GetCurrentNumber(i, j));
+				LoadSpriteNumber(position, sudoku.GetCurrentNumber(i, j), 0.65f);
 			}
 		}
 	}
@@ -315,6 +319,14 @@ bool CUserInterface::CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteS
 	return false;
 }
 
+void CUserInterface::OnChar(UINT nChar)
+{
+	if (nChar == '1')
+	{
+		
+	}
+}
+
 CDIB& CUserInterface::GetBuffer()
 {
 	return buffer;
@@ -381,16 +393,16 @@ void CUserInterface::RemoveSprites()
 
 void CUserInterface::SetCell(CVec2& position, int number)
 {
-	CSprite* numberSprite = LoadSpriteNumber(number);
+	CSprite* numberSprite = LoadSpriteNumber(position, number);
+	spriteArray[GetCellIndex(position.x, offset.x, tileSize.x, blockSpace.x)][GetCellIndex(position.y, offset.y, tileSize.y, blockSpace.y)] = SpriteArray(numberSprite, number, position);
 	CSprite* currentSprite = GetSprite(position);
 	if (currentSprite != nullptr)
 	{
 		spriteListSudoku.Remove(currentSprite);
 	}
-	numberSprite->SetPosition(position.x, position.y);
 }
 
-CSprite* CUserInterface::LoadSpriteNumber(int number)
+CSprite* CUserInterface::LoadSpriteNumber(CVec2& position, int number, float alpha)
 {
 	std::string path("./Sprites/SudokuNumberPixel" + std::to_string(number) + ".bmp");
 	std::vector<char> vPath(path.begin(), path.end());
@@ -402,13 +414,14 @@ CSprite* CUserInterface::LoadSpriteNumber(int number)
 		delete numberSprite;
 	}
 	numberSprite->SetZ(20);
-	numberSprite->SetPosition(-1000, -1000);
+	numberSprite->SetPosition(position.x, position.y);
+	numberSprite->SetAlpha(alpha);
 	spriteListSudoku.Insert(numberSprite);
+
 	return numberSprite;
 }
 
 CSprite* CUserInterface::GetSprite(CVec2& position)
 {
-	// ....
-	return nullptr;
+	return spriteArray[GetCellIndex(position.x, offset.x, tileSize.x, blockSpace.x)][GetCellIndex(position.y, offset.y, tileSize.y, blockSpace.y)].sprite;
 }

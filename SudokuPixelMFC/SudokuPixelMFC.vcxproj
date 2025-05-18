@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CSelectSudokuDlg.h" />
+    <ClInclude Include="CSolve.h" />
     <ClInclude Include="CSudoku.h" />
     <ClInclude Include="CUndo.h" />
     <ClInclude Include="CUserInterface.h" />
@@ -198,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSelectSudokuDlg.cpp" />
+    <ClCompile Include="CSolve.cpp" />
     <ClCompile Include="CSudoku.cpp" />
     <ClCompile Include="CUndo.cpp" />
     <ClCompile Include="CUserInterface.cpp" />

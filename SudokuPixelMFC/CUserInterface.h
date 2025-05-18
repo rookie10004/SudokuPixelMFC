@@ -60,12 +60,15 @@ private:
 
 	struct SpriteArray
 	{
+		SpriteArray() : sprite(nullptr), number(0), position(0, 0) { }
 		SpriteArray(CSprite* sprite, int number, CVec2 position) : sprite(sprite), number(number), position(position) { }
 
 		CSprite* sprite;
 		int number;
 		CVec2 position;
 	};
+
+	SpriteArray spriteArray[9][9];
 
 	CDIB buffer;
 	CSprite bkg;
@@ -118,6 +121,8 @@ private:
 	CVec2 githubIconSize{ 44, 44 };
 
 public:
+	CUserInterface();
+
 	bool OnInitSpritesSudoku(CSudoku& sudoku);
 
 	bool OnInitSpritesSelection();
@@ -135,6 +140,8 @@ public:
 	void ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize);
 
 	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize);
+
+	void OnChar(UINT nChar);
 
 	CDIB& GetBuffer();
 
@@ -154,7 +161,7 @@ public:
 
 	void SetCell(CVec2& position, int number);
 
-	CSprite* LoadSpriteNumber(int number);
+	CSprite* LoadSpriteNumber(CVec2& position, int number, float alpha = 1);
 
 	CSprite* GetSprite(CVec2& position);
 };

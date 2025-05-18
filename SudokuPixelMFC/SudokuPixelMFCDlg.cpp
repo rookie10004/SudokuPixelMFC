@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(CSudokuPixelMFCDlg, CDialogEx)
 	ON_WM_TIMER()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 BOOL CSudokuPixelMFCDlg::OnInitDialog()
@@ -55,6 +56,17 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 	SetTimer(1, 100, NULL);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+BOOL CSudokuPixelMFCDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_CHAR)
+	{
+		TCHAR ch = (TCHAR)pMsg->wParam;
+		userInterface.OnChar(ch);
+		return true;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -120,4 +132,9 @@ void CSudokuPixelMFCDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	userInterface.OnLButtonDownSudoku(point);
 
 	CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+void CSudokuPixelMFCDlg::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	CDialogEx::OnChar(nChar, nRepCnt, nFlags);
 }
