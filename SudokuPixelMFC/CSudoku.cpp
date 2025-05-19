@@ -43,6 +43,7 @@ void CSudoku::LoadNewGame()
 	int column = 0, row = 0;
 	char ch;
 	int count = 0;
+
 	while (file.get(ch) && count < 81)
 	{
 		if (ch >= '0' && ch <= '9')
@@ -178,27 +179,6 @@ void CSudoku::CopyArray()
 		for (int j = 0; j < 9; j++)
 		{
 			current[i][j] = original[i][j];
-		}
-	}
-}
-
-bool CSudoku::GenerateRandomSudoku()
-{
-	//solver.SolveSudoku(); generiert vollständiges Sudoku aber füge noch ein paar random Zahlen ein für den Seed
-	return false;
-}
-
-void CSudoku::RemoveNumbers()
-{
-	int removed = 0;
-	int countToRemoved = 40 + (static_cast<int>(difficulty) - 1) * 4;
-	while (removed < countToRemoved)
-	{
-		int row = rand() % 9;
-		int column = rand() % 9;
-		if (current[row][column] != 0)
-		{
-			current[row][column] = 0;
 		}
 	}
 }

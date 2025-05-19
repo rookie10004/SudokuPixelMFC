@@ -22,5 +22,7 @@ public:
 	void ResetStack();
 
 	bool Undo(CSudoku& sudoku);
+
+	Turn& GetStack() { return stack[top + 1]; };
 };
 

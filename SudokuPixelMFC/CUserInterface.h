@@ -5,13 +5,16 @@
 #include "CSudoku.h"
 #include "CVec2.h"
 #include <cstdlib>
+#include "CUndo.h"
+#include "CSolve.h"
 
 /*TODO:	
-		- Undo/Reset/Check/Solve/Save Funktion
+		- Check/Solve Funktion
+		- undo dynmanischer stack
 		- Code kommentieren
 		- Startbildschirm mit Intro
 		- Exceptions
-		- Sound??*/ 
+*/ 
 
 class CUserInterface
 {
@@ -100,7 +103,7 @@ public:
 
 	void OnLButtonDownSelection(CPoint point);
 
-	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku);
+	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& undo, CSolve& solve);
 
 	void OnLButtonDownSudoku(CPoint point);
 
@@ -108,7 +111,7 @@ public:
 
 	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize);
 
-	void OnChar(UINT nChar, CSudoku& sudoku);
+	void OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo);
 
 	CDIB& GetBuffer();
 
@@ -128,7 +131,9 @@ public:
 
 	void RemoveSprites();
 
-	void SetCell(CVec2& position, int number);
+	void RemoveNumbers();
+
+	void SetCell(CVec2& position, int number, CSudoku& sudoku);
 
 	CSprite* LoadSpriteNumber(CVec2& position, int number, float alpha = 1);
 

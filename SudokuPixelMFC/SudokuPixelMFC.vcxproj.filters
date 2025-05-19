@@ -104,220 +104,169 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\SudokuPixelMFC.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="ButtonExit.bmp">
       <Filter>Sprite Files</Filter>
     </Image>
-    <Image Include="SudokuNumbersPixel.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuFieldSelect.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuGrid423x423.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuGridColumnSelect.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuGridPixelWhite.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuGridRowSelect.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel0.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel1.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel2.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel3.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel4.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel5.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel6.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel7.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel8.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
-    <Image Include="SudokuNumberPixel9.bmp">
-      <Filter>Sprite Files</Filter>
-    </Image>
     <Image Include="Sprites\ButtonBack.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonBackIcon.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonBackIconPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonBackPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonCheck.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonCheckPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonEasy.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonEasyPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExit.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExitIcon.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExitIconPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExitPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExpert.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonExpertPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonGenerate.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonGeneratePressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonGod.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonGodPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonHard.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonHardPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonMedium.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonMediumPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonReset.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonResetPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonSave.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonSavePressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonSolve.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonSolvePressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonUndo.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\ButtonUndoPressed.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
+    </Image>
+    <Image Include="res\SudokuPixelMFC.ico">
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuBackground.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuFieldSelect.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuGrid423x423.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuGridColumnSelect.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuGridPixelWhite.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuGridRowSelect.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel0.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel1.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel2.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel3.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel4.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel5.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel6.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel7.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel8.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumberPixel9.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
     <Image Include="Sprites\SudokuNumbersPixel.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Sprite Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="sudoku1.txt">
+    <Text Include="Sudoku Loadouts\sudoku4.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sudoku2.txt">
+    <Text Include="Sudoku Loadouts\sudoku3.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sudoku3.txt">
+    <Text Include="Sudoku Loadouts\sudoku5.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sudoku4.txt">
+    <Text Include="Sudoku Loadouts\sudoku1.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="sudoku5.txt">
+    <Text Include="Sudoku Loadouts\sudoku2.txt">
       <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="sudokuGenerated.txt">
-      <Filter>Sprite Files</Filter>
     </Text>
   </ItemGroup>
 </Project>

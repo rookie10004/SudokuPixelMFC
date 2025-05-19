@@ -63,7 +63,7 @@ BOOL CSudokuPixelMFCDlg::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_CHAR)
 	{
 		TCHAR ch = (TCHAR)pMsg->wParam;
-		userInterface.OnChar(ch, sudoku);
+		userInterface.OnChar(ch, sudoku, undo);
 		return true;
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -118,7 +118,7 @@ void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	if (!userInterface.OnLButtonUpSudoku(point, sudoku))
+	if (!userInterface.OnLButtonUpSudoku(point, sudoku, undo, solve))
 	{
 		OnCancel();
 	}

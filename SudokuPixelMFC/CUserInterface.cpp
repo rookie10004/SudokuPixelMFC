@@ -25,7 +25,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 				int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
 				int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
 				CVec2 position{ x, y };
-				LoadSpriteNumber(position, sudoku.GetCurrentNumber(i, j));
+				SetCell(position, sudoku.GetCurrentNumber(i, j), sudoku);
 			}
 		}
 	}
@@ -239,7 +239,7 @@ void CUserInterface::OnLButtonDownSelection(CPoint point)
 	ButtonDownAnimation(point, buttonExit, spriteListSelection, exitButtonSize);
 }
 
-bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
+bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& undo, CSolve& solve)
 {
 	RemoveSprites();
 
@@ -261,10 +261,45 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku)
 	if (CheckButtonUp(point, buttonReset, resetButtonSize))
 	{
 		sudoku.LoadNewGame();
-		// ???
+		RemoveNumbers();
+
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (sudoku.GetCurrentNumber(i, j) != 0)
+				{
+					int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
+					int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
+					CVec2 position{ x, y };
+					SetCell(position, sudoku.GetCurrentNumber(i, j), sudoku);
+				}
+			}
+		}
 	}
 
-	// logik der anderen Button
+	if (CheckButtonUp(point, buttonSave, saveButtonSize))
+	{
+		sudoku.StoreSavegame();
+	}
+
+	if (CheckButtonUp(point, buttonUndo, undoButtonSize))
+	{
+		if (undo.Undo(sudoku))
+		{
+			spriteListSudoku.Remove(spriteArray[undo.GetStack().column][undo.GetStack().row].sprite);
+		}
+	}
+
+	if (CheckButtonUp(point, buttonCheck, checkButtonSize))
+	{
+		//solve.Check(sudoku);
+	}
+
+	if (CheckButtonUp(point, buttonSolve, solveButtonSize))
+	{
+		//solve.Automatically(sudoku);
+	}
 
 	if (CheckButtonUp(point, buttonExit, iconButtonSize))
 	{
@@ -316,13 +351,17 @@ bool CUserInterface::CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteS
 	return false;
 }
 
-void CUserInterface::OnChar(UINT nChar, CSudoku& sudoku)
+void CUserInterface::OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo)
 {
-	if (sudoku.GetOriginalNumber(GetCellIndex(CVec2(selectFrame.GetXPos(), selectFrame.GetYPos()))) == 0)
+	CVec2 index = GetCellIndex(CVec2(selectFrame.GetXPos(), selectFrame.GetYPos()));
+
+	if (sudoku.GetOriginalNumber(index) == 0 && selectFrame.GetPos() != CPoint(-1000, -1000))
 	{
 		if (nChar >= 49 && nChar <= 58)
 		{
-			SetCell(CVec2(selectFrame.GetXPos() + 8, selectFrame.GetYPos() + 8), nChar - '0');
+			SetCell(CVec2(selectFrame.GetXPos() + 8, selectFrame.GetYPos() + 8), nChar - '0', sudoku);
+			undo.StoreInStack(sudoku.GetCurrentNumber(index.y, index.x), index.y, index.x);
+			sudoku.SetCurrentNumber(nChar - '0', index.y, index.x);
 		}
 	}
 }
@@ -427,9 +466,31 @@ void CUserInterface::RemoveSprites()
 	spriteListSudoku.Remove(&buttonCheck[Status::Pressed]);
 }
 
-void CUserInterface::SetCell(CVec2& position, int number)
+void CUserInterface::RemoveNumbers()
 {
-	CSprite* numberSprite = LoadSpriteNumber(position, number, 0.65f);
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			spriteListSudoku.Remove(spriteArray[i][j].sprite);
+			spriteArray[i][j] = SpriteArray();
+		}
+	}
+}
+
+void CUserInterface::SetCell(CVec2& position, int number, CSudoku& sudoku)
+{
+	CSprite* numberSprite;
+
+	if (sudoku.GetOriginalNumber(GetCellIndex(position).y, GetCellIndex(position).x) != 0)
+	{
+		numberSprite = LoadSpriteNumber(position, number);
+	}
+	else
+	{
+		numberSprite = LoadSpriteNumber(position, number, 0.65f);
+	}
+
 	CSprite* currentSprite = GetSprite(position);
 	if (currentSprite != nullptr)
 	{

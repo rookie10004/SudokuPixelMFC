@@ -49,9 +49,5 @@ public:
 	bool CheckSavegame();
 
 	void CopyArray();
-
-	bool GenerateRandomSudoku();
-
-	void RemoveNumbers();
 };
 
