@@ -77,6 +77,12 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 		return false;
 	}
 
+	if (!buttonCheck[2].Load("./Sprites/ButtonCheckTrue.bmp") || !buttonCheck[3].Load("./Sprites/ButtonCheckFalse.bmp"))
+	{
+		AfxMessageBox(L"ButtonCheckTrue.bmp or ButtonCheckFalse.bmp load error");
+		return false;
+	}
+
 	return true;
 }
 
@@ -288,17 +294,49 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& und
 		if (undo.Undo(sudoku))
 		{
 			spriteListSudoku.Remove(spriteArray[undo.GetStack().column][undo.GetStack().row].sprite);
+			if (sudoku.GetCurrentNumber(undo.GetStack().row, undo.GetStack().column) != 0)
+			{
+				SetCell(spriteArray[undo.GetStack().column][undo.GetStack().row].position, undo.GetStack().number, sudoku);
+			}
 		}
 	}
 
-	if (CheckButtonUp(point, buttonCheck, checkButtonSize))
+	if (CheckButtonUp(point, buttonCheck, checkButtonSize) && buttonEnabled)
 	{
-		//solve.Check(sudoku);
+		if (solve.Check(sudoku))
+		{
+			buttonCheck[2].SetZ(5);
+			buttonCheck[2].SetPosition(buttonCheck[Status::Default].GetXPos(), buttonCheck[Status::Default].GetYPos());
+			spriteListSudoku.Insert(&buttonCheck[2]);
+		}
+		else
+		{
+			buttonCheck[3].SetZ(5);
+			buttonCheck[3].SetPosition(buttonCheck[Status::Default].GetXPos(), buttonCheck[Status::Default].GetYPos());
+			spriteListSudoku.Insert(&buttonCheck[3]);
+		}
+		buttonEnabled = false;
 	}
 
 	if (CheckButtonUp(point, buttonSolve, solveButtonSize))
 	{
-		//solve.Automatically(sudoku);
+		sudoku.LoadNewGame();
+		RemoveNumbers();
+		solve.Automatically(sudoku);
+
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (sudoku.GetCurrentNumber(i, j) != 0)
+				{
+					int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
+					int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
+					CVec2 position{ x, y };
+					SetCell(position, sudoku.GetCurrentNumber(i, j), sudoku);
+				}
+			}
+		}
 	}
 
 	if (CheckButtonUp(point, buttonExit, iconButtonSize))
@@ -476,6 +514,13 @@ void CUserInterface::RemoveNumbers()
 			spriteArray[i][j] = SpriteArray();
 		}
 	}
+}
+
+void CUserInterface::ButtonCheckRemove()
+{
+	spriteListSudoku.Remove(&buttonCheck[2]);
+	spriteListSudoku.Remove(&buttonCheck[3]);
+	buttonEnabled = true;
 }
 
 void CUserInterface::SetCell(CVec2& position, int number, CSudoku& sudoku)

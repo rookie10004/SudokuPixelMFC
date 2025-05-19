@@ -113,6 +113,11 @@ void CSudokuPixelMFCDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	CClientDC dc(this);
 	userInterface.GetSpriteListSudoku().Update(&dc, 0, 0);
+	if (nIDEvent == 2)
+	{
+		userInterface.ButtonCheckRemove();
+		KillTimer(2);
+	}
 	CDialogEx::OnTimer(nIDEvent);
 }
 
@@ -123,6 +128,7 @@ void CSudokuPixelMFCDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		OnCancel();
 	}
 
+	SetTimer(2, 1000, NULL);
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
 

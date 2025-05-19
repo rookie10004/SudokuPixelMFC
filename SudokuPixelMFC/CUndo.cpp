@@ -37,4 +37,3 @@ bool CUndo::Undo(CSudoku& sudoku)
 	}
 	return false;
 }
-

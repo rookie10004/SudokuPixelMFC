@@ -16,7 +16,7 @@
 		- Exceptions
 */ 
 
-class CUserInterface
+class CUserInterface : public CDialogEx
 {
 private:
 	CVec2 selectionSize{ 344, 470 };
@@ -58,11 +58,12 @@ private:
 	CSprite buttonUndo[2];
 	CSprite buttonReset[2];
 	CSprite buttonSolve[2];
-	CSprite buttonCheck[2];
 	CSprite buttonSave[2];
 	CSprite buttonBack[2];
 	CSprite buttonExit[2];
 	CSprite buttonGithub;
+	CSprite buttonCheck[4];
+	bool buttonEnabled = true;
 
 	CVec2 offset{ 58, 10 };
 	CVec2 gridSize{ 423, 423 };
@@ -132,6 +133,8 @@ public:
 	void RemoveSprites();
 
 	void RemoveNumbers();
+
+	void ButtonCheckRemove();
 
 	void SetCell(CVec2& position, int number, CSudoku& sudoku);
 
