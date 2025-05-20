@@ -249,7 +249,7 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& und
 {
 	RemoveSprites();
 
-	CVec2 currentCell = GetCellIndex(CVec2(point.x, point.y));
+	currentCell = GetCellIndex(CVec2(point.x, point.y));
 
 	if (currentCell != CVec2(-1, -1))
 	{
@@ -391,15 +391,13 @@ bool CUserInterface::CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteS
 
 void CUserInterface::OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo)
 {
-	CVec2 index = GetCellIndex(CVec2(selectFrame.GetXPos(), selectFrame.GetYPos()));
-
-	if (sudoku.GetOriginalNumber(index) == 0 && selectFrame.GetPos() != CPoint(-1000, -1000))
+	if (sudoku.GetOriginalNumber(currentCell) == 0 && selectFrame.GetPos() != CPoint(-1000, -1000))
 	{
-		if (nChar >= 49 && nChar <= 58)
+		if (nChar >= '1' && nChar <= '9')
 		{
 			SetCell(CVec2(selectFrame.GetXPos() + 8, selectFrame.GetYPos() + 8), nChar - '0', sudoku);
-			undo.StoreInStack(sudoku.GetCurrentNumber(index.y, index.x), index.y, index.x);
-			sudoku.SetCurrentNumber(nChar - '0', index.y, index.x);
+			undo.StoreInStack(sudoku.GetCurrentNumber(currentCell.y, currentCell.x), currentCell.y, currentCell.x);
+			sudoku.SetCurrentNumber(nChar - '0', currentCell.y, currentCell.x);
 		}
 	}
 }

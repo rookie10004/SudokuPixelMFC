@@ -9,11 +9,10 @@
 #include "CSolve.h"
 
 /*TODO:	
-		- Check/Solve Funktion
 		- undo dynmanischer stack
 		- Code kommentieren
-		- Startbildschirm mit Intro
 		- Exceptions
+		- Schwierigkeiten anpassen
 */ 
 
 class CUserInterface : public CDialogEx
@@ -31,6 +30,7 @@ private:
 	struct SpriteArray
 	{
 		SpriteArray() : sprite(nullptr), number(0), position(0, 0) { }
+
 		SpriteArray(CSprite* sprite, int number, CVec2 position) : sprite(sprite), number(number), position(position) { }
 
 		CSprite* sprite;
@@ -39,6 +39,8 @@ private:
 	};
 
 	SpriteArray spriteArray[9][9];
+
+	CVec2 currentCell{ -1, -1 };
 
 	CDIB buffer;
 	CSprite bkg;
