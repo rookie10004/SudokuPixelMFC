@@ -249,7 +249,10 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& und
 {
 	RemoveSprites();
 
-	currentCell = GetCellIndex(CVec2(point.x, point.y));
+	if (point.x >= offset.x && point.x <= offset.x + gridSize.x && point.y >= offset.y && point.y <= offset.y + gridSize.y)
+	{
+		currentCell = GetCellIndex(CVec2(point.x, point.y));
+	}
 
 	if (currentCell != CVec2(-1, -1))
 	{
@@ -398,6 +401,55 @@ void CUserInterface::OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo)
 			SetCell(CVec2(selectFrame.GetXPos() + 8, selectFrame.GetYPos() + 8), nChar - '0', sudoku);
 			undo.StoreInStack(sudoku.GetCurrentNumber(currentCell.y, currentCell.x), currentCell.y, currentCell.x);
 			sudoku.SetCurrentNumber(nChar - '0', currentCell.y, currentCell.x);
+		}
+	}
+
+	if (selectFrame.GetPos() != CPoint(-1000, -1000))
+	{
+		switch (nChar)
+		{
+		case 'w':
+		case 'W':
+			if (currentCell.y > 0)
+			{
+				currentCell.y--;
+				selectFrame.SetPosition(currentCell * tileSize + offset + (currentCell / 3) * blockSpace + blockSpace);
+				selectDimension[1].SetPosition(offset.x, offset.y + currentCell.y * tileSize.y + (currentCell.y / 3) * blockSpace.y + blockSpace.y);
+			}
+			break;
+
+		case 'a':
+		case 'A':
+			if (currentCell.x > 0)
+			{
+				currentCell.x--;
+				selectFrame.SetPosition(currentCell * tileSize + offset + (currentCell / 3) * blockSpace + blockSpace);
+				selectDimension[0].SetPosition(offset.x + currentCell.x * tileSize.x + (currentCell.x / 3) * blockSpace.x + blockSpace.x, offset.y);
+			}
+			break;
+
+		case 's':
+		case 'S':
+			if (currentCell.y < 8)
+			{
+				currentCell.y++;
+				selectFrame.SetPosition(currentCell * tileSize + offset + (currentCell / 3) * blockSpace + blockSpace);
+				selectDimension[1].SetPosition(offset.x, offset.y + currentCell.y * tileSize.y + (currentCell.y / 3) * blockSpace.y + blockSpace.y);
+			}
+			break;
+
+		case 'd':
+		case 'D':
+			if (currentCell.x < 8)
+			{
+				currentCell.x++;
+				selectFrame.SetPosition(currentCell * tileSize + offset + (currentCell / 3) * blockSpace + blockSpace);
+				selectDimension[0].SetPosition(offset.x + currentCell.x * tileSize.x + (currentCell.x / 3) * blockSpace.x + blockSpace.x, offset.y);
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
 }
