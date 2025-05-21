@@ -36,8 +36,7 @@ void CSudoku::LoadNewGame()
 
 	if (!file)
 	{
-		AfxMessageBox(L"File open error");
-		OnCancel();
+		throw FileException("Error opening file:" + filePath);
 	}
 
 	int column = 0, row = 0;
@@ -69,8 +68,7 @@ void CSudoku::LoadOldGame()
 
 	if (!file)
 	{
-		AfxMessageBox(L"File open error");
-		OnCancel();
+		throw FileException("Error opening file:" + filePath);
 	}
 
 	int column = 0, row = 0;
@@ -107,8 +105,7 @@ void CSudoku::StoreSavegame()
 
 	if (!file)
 	{
-		AfxMessageBox(L"File open error");
-		OnCancel();
+		throw FileException("Error opening file:" + filePath);
 	}
 
 	for (int i = 0; i < 9; i++)
@@ -132,26 +129,13 @@ void CSudoku::StoreSavegame()
 	file.close();
 }
 
-void CSudoku::ResetArrays()
-{
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			current[i][j] = 0;
-			original[i][j] = 0;
-		}
-	}
-}
-
 bool CSudoku::CheckSavegame()
 {
 	std::ifstream file(filePath);
 
 	if (!file)
 	{
-		AfxMessageBox(L"File open error");
-		OnCancel();
+		throw FileException("Error opening file:" + filePath);
 	}
 
 	int count = 0;

@@ -44,7 +44,6 @@ void CSelectSudokuDlg::OnPaint()
 
 	if (IsIconic())
 	{
-
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// Center icon in client rectangle
@@ -82,10 +81,14 @@ BOOL CSelectSudokuDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-
-	if (!userInterface.OnInitSpritesSelection())
+	try
 	{
-		OnCancel();
+		userInterface.OnInitSpritesSelection();
+	}
+	catch (const std::exception& e)
+	{
+		MessageBoxA(nullptr, e.what(), "Error", MB_OK | MB_ICONERROR);
+		::PostQuitMessage(1);
 	}
 
 	SetWindowPos(NULL, 0, 0, 344, 470, SWP_NOZORDER | SWP_NOMOVE);

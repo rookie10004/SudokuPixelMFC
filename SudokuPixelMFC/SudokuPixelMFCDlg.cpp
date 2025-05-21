@@ -46,10 +46,14 @@ BOOL CSudokuPixelMFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-
-	if (!userInterface.OnInitSpritesSudoku(sudoku))
+	try
 	{
-		OnCancel();
+		userInterface.OnInitSpritesSudoku(sudoku);
+	}
+	catch (const std::exception& e)
+	{
+		MessageBoxA(nullptr, e.what(), "Error", MB_OK | MB_ICONERROR);
+		::PostQuitMessage(1);
 	}
 
 	SetWindowPos(NULL, 0, 0, userInterface.GetBuffer().DibWidth(), userInterface.GetBuffer().DibHeight(), SWP_NOZORDER | SWP_NOMOVE);

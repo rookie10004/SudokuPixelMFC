@@ -1,5 +1,6 @@
 #pragma once
 #include "CSudoku.h"
+#include <vector>
 
 class CUndo
 {
@@ -11,18 +12,19 @@ private:
 		int column;
 	};
 
-	Turn stack[100];
-	int top;
+	std::vector<Turn> stack;
 
 public:
-	CUndo();
+	~CUndo();
 
-	bool StoreInStack(int number, int row, int column);
+	void StoreInStack(int number, int row, int column); //speichert Daten in Vector
 
-	void ResetStack();
+	bool Undo(CSudoku& sudoku); //löscht das letzte Element
 
-	bool Undo(CSudoku& sudoku);
+	bool isEmpty(); //überprüft ob vector leer ist
 
-	Turn& GetStack() { return stack[top + 1]; };
+	Turn& GetStack() { return stack.back(); };
+
+	void ClearStack(); //löscht den Vector
 };
 

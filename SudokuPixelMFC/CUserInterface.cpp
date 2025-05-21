@@ -11,7 +11,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 {
 	if (!buffer.Load("./Sprites/SudokuGridPixelWhite.bmp"))
 	{
-		AfxMessageBox(L"SudokuBackground.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuGridPixelWhite.bmp");
 		return false;
 	}
 	spriteListSudoku.SetWorkspace(&buffer);
@@ -20,19 +20,16 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (sudoku.GetCurrentNumber(i, j) != 0)
-			{
-				int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
-				int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
-				CVec2 position{ x, y };
-				SetCell(position, sudoku.GetCurrentNumber(i, j), sudoku);
-			}
+			int x = j * tileSize.x + offset.x + (j / 3) * blockSpace.x + tileSize.x - numberSize.x - 2;
+			int y = i * tileSize.y + offset.y + (i / 3) * blockSpace.y + tileSize.y - numberSize.y - 2;
+			CVec2 position{ x, y };
+			SetCell(position, sudoku.GetCurrentNumber(i, j), sudoku);
 		}
 	}
 
 	if (!selectFrame.Load("./Sprites/SudokuFieldSelect.bmp"))
 	{
-		AfxMessageBox(L"SudokuFieldSelect.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuFieldSelect.bmp");
 		return false;
 	}
 	selectFrame.SetZ(0);
@@ -41,7 +38,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 
 	if (!selectDimension[0].Load("./Sprites/SudokuGridColumnSelect.bmp"))
 	{
-		AfxMessageBox(L"SudokuGridColumnSelect.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuGridColumnSelect.bmp");
 		return false;
 	}
 	selectDimension[0].SetZ(0);
@@ -50,7 +47,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 
 	if (!selectDimension[1].Load("./Sprites/SudokuGridRowSelect.bmp"))
 	{
-		AfxMessageBox(L"SudokuGridRowSelect.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuGridRowSelect.bmp");
 		return false;
 	}
 	selectDimension[1].SetZ(0);
@@ -59,7 +56,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 
 	if (!frame.Load("./Sprites/SudokuGrid423x423.bmp"))
 	{
-		AfxMessageBox(L"SudokuGrid423x423.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuGrid423x423.bmp");
 		return false;
 	}
 	frame.SetZ(0);
@@ -79,8 +76,7 @@ bool CUserInterface::OnInitSpritesSudoku(CSudoku& sudoku)
 
 	if (!buttonCheck[2].Load("./Sprites/ButtonCheckTrue.bmp") || !buttonCheck[3].Load("./Sprites/ButtonCheckFalse.bmp"))
 	{
-		AfxMessageBox(L"ButtonCheckTrue.bmp or ButtonCheckFalse.bmp load error");
-		return false;
+		throw SpriteException("Error loading sprite:ButtonCheckTrue.bmp or ButtonCheckFalse.bmp");
 	}
 
 	return true;
@@ -90,7 +86,7 @@ bool CUserInterface::OnInitSpritesSelection()
 {
 	if (!buffer.Load("./Sprites/SudokuGridPixelWhite.bmp"))
 	{
-		AfxMessageBox(L"SudokuBackground.bmp load error");
+		throw SpriteException("Error loading sprite:SudokuGridPixelWhite.bmp");
 		return false;
 	}
 	spriteListSelection.SetWorkspace(&buffer);
@@ -107,7 +103,7 @@ bool CUserInterface::OnInitSpritesSelection()
 
 	if (!buttonGithub.Load("./Sprites/githubIcon.bmp"))
 	{
-		AfxMessageBox(L"githubIcon.bmp load error");
+		throw SpriteException("Error loading sprite:githubIcon.bmp");
 		return false;
 	}
 	buttonGithub.SetZ(0);
@@ -125,7 +121,7 @@ bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 
 
 	if (!sprite[Status::Default].Load(path.data()))
 	{
-		AfxMessageBox(L"load error!");
+		throw SpriteException("Error loading sprite:" + p);
 		return false;
 	}
 	sprite[Status::Default].SetZ(0);
@@ -138,7 +134,7 @@ bool CUserInterface::LoadSpriteButton(std::string name, CSprite sprite[], CVec2 
 
 	if (!sprite[Status::Pressed].Load(vPath.data(), CSize(spriteSize.x, spriteSize.y), false))
 	{
-		AfxMessageBox(L"load error");
+		throw SpriteException("Error loading sprite:" + p);
 		return false;
 	}
 
@@ -151,71 +147,31 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 
 	if (CheckButtonUp(point, buttonEasy, easyButtonSize))
 	{
-		sudoku.SetFilePath("./Sudoku Loadouts/sudoku1.txt");
-		if (sudoku.CheckSavegame())
-		{
-			sudoku.LoadOldGame();
-		}
-		else
-		{
-			sudoku.LoadNewGame();
-		}
+		LoadFile("./Sudoku Loadouts/sudoku1.txt", sudoku);
 		return true;
 	}
 
 	if (CheckButtonUp(point, buttonMedium, mediumButtonSize))
 	{
-		sudoku.SetFilePath("./Sudoku Loadouts/sudoku2.txt");
-		if (sudoku.CheckSavegame())
-		{
-			sudoku.LoadOldGame();
-		}
-		else
-		{
-			sudoku.LoadNewGame();
-		}
+		LoadFile("./Sudoku Loadouts/sudoku2.txt", sudoku);
 		return true;
 	}
 
 	if (CheckButtonUp(point, buttonHard, hardButtonSize))
 	{
-		sudoku.SetFilePath("./Sudoku Loadouts/sudoku3.txt");
-		if (sudoku.CheckSavegame())
-		{
-			sudoku.LoadOldGame();
-		}
-		else
-		{
-			sudoku.LoadNewGame();
-		}
+		LoadFile("./Sudoku Loadouts/sudoku3.txt", sudoku);
 		return true;
 	}
 
 	if (CheckButtonUp(point, buttonExpert, expertButtonSize))
 	{
-		sudoku.SetFilePath("./Sudoku Loadouts/sudoku4.txt");
-		if (sudoku.CheckSavegame())
-		{
-			sudoku.LoadOldGame();
-		}
-		else
-		{
-			sudoku.LoadNewGame();
-		}
+		LoadFile("./Sudoku Loadouts/sudoku4.txt", sudoku);
 		return true;
 	}
 
 	if (CheckButtonUp(point, buttonGod, godButtonSize))
 	{
-		sudoku.SetFilePath("./Sudoku Loadouts/sudoku5.txt");
-		if (sudoku.CheckSavegame())
-		{
-			sudoku.LoadOldGame();
-		}
-		else
-		{
-			sudoku.LoadNewGame();
-		}
+		LoadFile("./Sudoku Loadouts/sudoku5.txt", sudoku);
 		return true;
 	}
 
@@ -229,7 +185,14 @@ bool CUserInterface::OnLButtonUpSelection(CPoint point, CSudoku& sudoku)
 		point.y >= buttonGithub.GetYPos() &&
 		point.y <= githubIconSize.y + buttonGithub.GetYPos())
 	{
-		openURL("https://github.com/rookie10004/SudokuPixelMFC");
+		try
+		{
+			openURL("https://github.com/rookie10004/SudokuPixelMFC");
+		}
+		catch (const std::exception& e)
+		{
+			MessageBoxA(nullptr, e.what(), "Error", MB_OK | MB_ICONHAND);
+		}
 	}
 
 	return false;
@@ -294,13 +257,11 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& und
 
 	if (CheckButtonUp(point, buttonUndo, undoButtonSize))
 	{
-		if (undo.Undo(sudoku))
+		if (!undo.isEmpty())
 		{
 			spriteListSudoku.Remove(spriteArray[undo.GetStack().column][undo.GetStack().row].sprite);
-			if (sudoku.GetCurrentNumber(undo.GetStack().row, undo.GetStack().column) != 0)
-			{
-				SetCell(spriteArray[undo.GetStack().column][undo.GetStack().row].position, undo.GetStack().number, sudoku);
-			}
+			SetCell(spriteArray[undo.GetStack().column][undo.GetStack().row].position, undo.GetStack().number, sudoku);
+			undo.Undo(sudoku);
 		}
 	}
 
@@ -326,6 +287,7 @@ bool CUserInterface::OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& und
 		sudoku.LoadNewGame();
 		RemoveNumbers();
 		solve.Automatically(sudoku);
+		undo.ClearStack();
 
 		for (int i = 0; i < 9; i++)
 		{
@@ -513,6 +475,27 @@ CVec2 CUserInterface::GetCellIndex(CVec2& position)
 	return CVec2(-1, -1);
 }
 
+void CUserInterface::LoadFile(std::string filePath, CSudoku& sudoku)
+{
+	try
+	{
+		sudoku.SetFilePath(filePath);
+		if (sudoku.CheckSavegame())
+		{
+			sudoku.LoadOldGame();
+		}
+		else
+		{
+			sudoku.LoadNewGame();
+		}
+	}
+	catch (const std::exception& e)
+	{
+		MessageBoxA(nullptr, e.what(), "Error", MB_OK | MB_ICONERROR);
+		::PostQuitMessage(1);
+	}
+}
+
 void CUserInterface::openURL(const std::string& url)
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -531,7 +514,7 @@ void CUserInterface::openURL(const std::string& url)
 	system(command.c_str());
 
 #else
-	AfxMessageBox(L"Plattform wird nicht unterstützt");
+	throw OSException("Operating system is not fully supported");
 #endif
 }
 
@@ -575,6 +558,11 @@ void CUserInterface::ButtonCheckRemove()
 
 void CUserInterface::SetCell(CVec2& position, int number, CSudoku& sudoku)
 {
+	if (number == 0)
+	{
+		return;
+	}
+
 	CSprite* numberSprite;
 
 	if (sudoku.GetOriginalNumber(GetCellIndex(position).y, GetCellIndex(position).x) != 0)

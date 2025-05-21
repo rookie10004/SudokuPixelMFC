@@ -7,64 +7,28 @@ CSolve::CSolve()
 
 bool CSolve::Check(CSudoku& sudoku)
 {
-	for (int i = 0; i < 9; i++)
+	int value;
+
+	for (int i= 0; i< 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (sudoku.GetCurrentNumber(i, j) == '0')
+			value = sudoku.GetCurrentNumber(i, j);
+			if (value != 0)
+			{
+				sudoku.SetCurrentNumber(0, i, j);
+
+				if (!CheckNumber(sudoku, value, i, j))
+				{
+					sudoku.SetCurrentNumber(value, i, j);
+					return false;
+				}
+
+				sudoku.SetCurrentNumber(value, i, j);
+			}
+			else
 			{
 				return false;
-			}
-		}
-	}
-
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			for (int k = j + 1; k < 9; k++)
-			{
-				if (sudoku.GetCurrentNumber(i, j) == sudoku.GetCurrentNumber(i, k))
-				{
-					return false;
-				}
-			}
-		}
-	}
-
-	for (int i = 0; i < 9; i++)	
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			for (int k = j + 1; k < 9; k++)
-			{
-				if (sudoku.GetCurrentNumber(j, i) == sudoku.GetCurrentNumber(k, i))
-				{
-					return false;
-				}
-			}
-		}
-	}
-
-	for (int QuadratZeile = 0; QuadratZeile < 3; QuadratZeile++)	
-	{
-		for (int QuadratSpalte = 0; QuadratSpalte < 3; QuadratSpalte++)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				for (int j = 0; j < 3; j++)
-				{
-					for (int k = i; k < 3; k++)
-					{
-						for (int l = (k == i ? j + 1 : 0); l < 3; l++)
-						{
-							if (sudoku.GetCurrentNumber(QuadratZeile * 3 + i, QuadratSpalte * 3 + j) == sudoku.GetCurrentNumber(QuadratZeile * 3 + k, QuadratSpalte * 3 + l))
-							{
-								return false;
-							}
-						}
-					}
-				}
 			}
 		}
 	}

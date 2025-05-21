@@ -8,18 +8,11 @@
 #include "CUndo.h"
 #include "CSolve.h"
 
-/*TODO:	
-		- undo dynmanischer stack
-		- Code kommentieren
-		- Exceptions
-		- Schwierigkeiten anpassen
-*/ 
 
 class CUserInterface : public CDialogEx
 {
 private:
 	CVec2 selectionSize{ 344, 470 };
-	CVec2 sudokuSize{  }; // fehlt noch
 
 	enum Status : int
 	{
@@ -96,25 +89,25 @@ private:
 public:
 	CUserInterface();
 
-	bool OnInitSpritesSudoku(CSudoku& sudoku);
+	bool OnInitSpritesSudoku(CSudoku& sudoku); //initialiesiert sprites für zweiten Dialogfenster
 
-	bool OnInitSpritesSelection();
+	bool OnInitSpritesSelection(); //initialiesiert sprites für ersten Dialogfenster
 
-	bool LoadSpriteButton(std::string path, CSprite sprite[], CVec2 spriteSize, CSpriteList& spriteList, int x, int y);
+	bool LoadSpriteButton(std::string path, CSprite sprite[], CVec2 spriteSize, CSpriteList& spriteList, int x, int y); //Hilfsfunktion zum initaliseren der button sprites
 
-	bool OnLButtonUpSelection(CPoint point, CSudoku& sudoku);
+	bool OnLButtonUpSelection(CPoint point, CSudoku& sudoku); //Eventfunktion
 
-	void OnLButtonDownSelection(CPoint point);
+	void OnLButtonDownSelection(CPoint point); //Eventfunktion
 
-	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& undo, CSolve& solve);
+	bool OnLButtonUpSudoku(CPoint point, CSudoku& sudoku, CUndo& undo, CSolve& solve); //Eventfunktion
 
-	void OnLButtonDownSudoku(CPoint point);
+	void OnLButtonDownSudoku(CPoint point); //Eventfunktion
 
-	void ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize);
+	void ButtonDownAnimation(CPoint point, CSprite sprite[], CSpriteList& spriteList, CVec2 spriteSize); //Animation für button sprites gedrückt
 
-	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize);
+	bool CheckButtonUp(CPoint point, CSprite sprite[], CVec2 spriteSize); //überprüft ob button gedrückt werden
 
-	void OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo);
+	void OnChar(UINT nChar, CSudoku& sudoku, CUndo& undo); //Eventfunktion
 
 	CDIB& GetBuffer();
 
@@ -128,19 +121,21 @@ public:
 
 	CSprite* GetButtonExit();
 
-	CVec2 GetCellIndex(CVec2& position);
+	CVec2 GetCellIndex(CVec2& position); //berechnet Array index
 
-	void openURL(const std::string& url);
+	void LoadFile(std::string filePath, CSudoku& sudoku); //Hilfsfunktion zum Laden des alten, wenn vorhanden, oder neuen Spielstands
 
-	void RemoveSprites();
+	void openURL(const std::string& url); //öffnet im Standardbrowser den Link je nach BS (BS wird im Präprozess erkannt)
 
-	void RemoveNumbers();
+	void RemoveSprites(); //entfernt alle gedrückten button sprites
 
-	void ButtonCheckRemove();
+	void RemoveNumbers(); //entfernt alle Nummern aus dem array und der spriteliste
 
-	void SetCell(CVec2& position, int number, CSudoku& sudoku);
+	void ButtonCheckRemove(); //entfernt button sprite explizit für den Check button
 
-	CSprite* LoadSpriteNumber(CVec2& position, int number, float alpha = 1);
+	void SetCell(CVec2& position, int number, CSudoku& sudoku); //lädt Nummer sprite in das entsprechende Feld und löscht das vorherige
+
+	CSprite* LoadSpriteNumber(CVec2& position, int number, float alpha = 1); //setzt X/Y/Z/Alpha für die Nummer sprite (Hilfsfunktion von SetCell)
 
 	CSprite* GetSprite(CVec2& position);
 };

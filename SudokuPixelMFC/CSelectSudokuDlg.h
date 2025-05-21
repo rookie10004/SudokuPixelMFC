@@ -2,6 +2,7 @@
 #include "afxdialogex.h"
 #include "CUserInterface.h"
 #include "SudokuPixelMFCDlg.h"
+#include "Exceptions.h"
 
 
 // CSelectSudokuDlg dialog

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <afxwin.h>
 #include "CVec2.h"
+#include "Exceptions.h"
 
 class CSudoku : CDialog
 {
@@ -26,14 +27,12 @@ public:
 
 	void SetCurrentNumber(int number, int  row, int column);
 
-	void LoadNewGame();
+	void LoadNewGame(); //lädt aus der ersten Zeile die Werte ins array
 
-	void LoadOldGame();
+	void LoadOldGame(); //lädt aus der ersten und zweiten Zeile die Werte ins array
 
-	void StoreSavegame();
+	void StoreSavegame(); //speichert die Werte in der zweiten Zeile
 
-	void ResetArrays();
-
-	bool CheckSavegame();
+	bool CheckSavegame(); //überprüft auf bereits vorhandenen Spielstand
 };
 

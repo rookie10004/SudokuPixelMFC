@@ -1,39 +1,38 @@
 #include "pch.h"
 #include "CUndo.h"
 
-CUndo::CUndo()
+
+CUndo::~CUndo()
 {
-	top = -1;
+	stack.clear();
 }
 
-bool CUndo::StoreInStack(int number, int row, int column)
+void CUndo::StoreInStack(int number, int row, int column)
 {
-	if (top < 99)
-	{
-		++top;
-		stack[top].number = number;
-		stack[top].row = row;
-		stack[top].column = column;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-void CUndo::ResetStack()
-{
-	top = -1;
+	Turn temp = { number, row, column };
+	stack.push_back(temp);
 }
 
 bool CUndo::Undo(CSudoku& sudoku)
 {
-	if (top >= 0)
+	if (stack.empty())
 	{
-		sudoku.SetCurrentNumber(stack[top].number, stack[top].row, stack[top].column);
-		top--;
-		return true;
+		return false;
 	}
-	return false;
+
+	Turn temp = stack.back();
+	sudoku.SetCurrentNumber(temp.number, temp.row, temp.column);
+	stack.pop_back();
+
+	return true;
+}
+
+bool CUndo::isEmpty()
+{
+	return stack.empty();
+}
+
+void CUndo::ClearStack()
+{
+	stack.clear();
 }

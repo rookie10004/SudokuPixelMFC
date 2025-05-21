@@ -1,5 +1,6 @@
 #pragma once
 
+//2D-vector mit Vergleichs- und Rechenoperationen
 struct CVec2
 {
 	int x;
